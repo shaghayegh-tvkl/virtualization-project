@@ -19,9 +19,9 @@ clientPort=2181
 # specify all zookeeper servers
 # The fist port is used by followers to connect to the leader
 # The second one is used for leader election
-server.1=192.168.54.15:2888:3888
-server.2=192.168.54.29:2888:3888
-server.3=192.168.54.14:2888:3888
+server.1={{server1}}:2888:3888
+server.2={{server2}}:2888:3888
+server.3={{server3}}:2888:3888
 
 
 # To avoid seeks ZooKeeper allocates space in the transaction log file in
