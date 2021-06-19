@@ -8,8 +8,14 @@
     update_cache: yes
 
 - name: Delete Old Config
-  shell: rm /etc/zookeeper/zoo.cfg
+  shell: /bin/rm /etc/zookeeper/zoo.cfg
 
 
-- name: Overwrite default config file
-  template: src=./files/zoo.cfg.j2 dest=/etc/zookeeper/zoo.cfg
+
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: ./files/zoo.cfg
+    dest: /etc/zookeeper/zoo.cfg
+    owner: root
+    group: root
+    mode: '0644'
