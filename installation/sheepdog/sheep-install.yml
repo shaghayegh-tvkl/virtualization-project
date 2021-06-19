@@ -15,6 +15,11 @@
 - name: Unzip Sources
   shell: tar xvzf {{ sheepdog.project_dir }}/{{ sheepdog.file }}
 
+- name: Extract foo.tgz into /var/lib/foo
+  ansible.builtin.unarchive:
+    src: /home/ununtu/{{ sheepdog.file }}
+    dest: /home/ununtu/sheepdog
+
 - name: Run ./autogen Script
   shell: /home/ununtu/{{ sheepdog.file }}/autogen
 
@@ -24,4 +29,3 @@
 
 - name: Make Sheepdog
   command: chdir=/home/ununtu/{{ sheepdog.file }} make install
-  
