@@ -22,11 +22,11 @@
     remote_src: yes
 
 - name: Run ./autogen Script
-  shell: /home/ubuntu/{{ sheepdog.file }}/autogen
+  shell: /home/ubuntu/sheepdog-0.9.3/autogen
 
 
 - name: Run ./configure Script
-  shell: /home/ubuntu/{{ sheepdog.file }}/configure --enable-zookeeper
+  shell: /home/ubuntu/sheepdog-0.9.3/configure --enable-zookeeper
 
 - name: Make Sheepdog
-  command: chdir=/home/ubuntu/{{ sheepdog.file }} make install
+  command: chdir=/home/ubuntu/sheepdog-0.9.3 make install
