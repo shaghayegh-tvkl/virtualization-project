@@ -30,9 +30,11 @@
     - name: Install Zookeeper
       include: ./zookeeper/zoo-install.yml
 
-    - name: Set Zookeeper Id
-      set_fact: zk_id={{item.0 + 1}}
-      with_indexed_items: "{{groups['tag_Name_MESOS_MASTER']}}"
+    - name: Set Zookeeper ID
+      copy: >
+      content={{ item.0 + 1 }}
+      dest=/var/lib/zookeeper/myid
+      with_indexed_items: "{{groups['cluster-manager-test']}}"
       when: item.1 == "{{inventory_hostname}}"
     
     - name: Start Zookeeper

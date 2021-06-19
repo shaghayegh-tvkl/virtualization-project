@@ -7,6 +7,10 @@
     state: latest
     update_cache: yes
 
+- name: Delete Old Config
+  shell: rm /etc/zookeeper/zoo.cfg
+
+
 - name: Template a zoo.cfg 
   ansible.builtin.template:
     src: ./files/zoo.cfg.j2
