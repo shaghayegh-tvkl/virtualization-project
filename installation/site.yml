@@ -38,7 +38,7 @@
       when: item.1 == "{{inventory_hostname}}"
     
     - name: Start Zookeeper
-      command: chdir=/usr/share/zookeeper/bin ./zkCli.sh
+      command: chdir=/usr/share/zookeeper/bin ./zkCli.sh start
     
 # ------------------------------------------------------------------------------
 
