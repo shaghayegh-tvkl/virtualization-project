@@ -1,11 +1,11 @@
 ---
-- name: Configure DNS
-  hosts:
-    - storage-test
-  remote_user: root
-  tasks:
-    - name: Adding Shecan DNS Nameserver to /etc/resolv.conf
-      include: ./shecan-dns/dns.yaml
+# - name: Configure DNS
+#   hosts:
+#     - storage-test
+#   remote_user: root
+#   tasks:
+#     - name: Adding Shecan DNS Nameserver to /etc/resolv.conf
+#       include: ./shecan-dns/dns.yaml
 
 # ------------------------------------------------------------------------------
 # - name: Sheepdog
@@ -19,29 +19,39 @@
 
 # ------------------------------------------------------------------------------
 
-- name: Configure Cluster Manager
-  hosts:
-    - cluster-manager-test
+# - name: Configure Cluster Manager
+#   hosts:
+#     - cluster-manager-test
 
-  remote_user: root
-  tasks:
-    - name: Install Java
-      include: ./java/java-install.yml
-    - name: Install Zookeeper
-      include: ./zookeeper/zoo-install.yml
+#   remote_user: root
+#   tasks:
+#     - name: Install Java
+#       include: ./java/java-install.yml
+#     - name: Install Zookeeper
+#       include: ./zookeeper/zoo-install.yml
 
-    - name: Set Zookeeper ID
-      copy: >
-        content={{ item.0 + 1 }}
-        dest=/var/lib/zookeeper/myid
-      with_indexed_items: "{{groups['cluster-manager-test']}}"
-      when: item.1 == "{{inventory_hostname}}"
+#     - name: Set Zookeeper ID
+#       copy: >
+#         content={{ item.0 + 1 }}
+#         dest=/var/lib/zookeeper/myid
+#       with_indexed_items: "{{groups['cluster-manager-test']}}"
+#       when: item.1 == "{{inventory_hostname}}"
     
-    - name: Start Zookeeper
-      command: chdir=/usr/share/zookeeper/bin ./zkCli.sh start
+#     - name: Start Zookeeper
+#       command: chdir=/usr/share/zookeeper/bin ./zkCli.sh start
     
 # ------------------------------------------------------------------------------
 
+- name: Sheepdog
+  hosts:
+    - storage-test
+
+  remote_user: root
+  tasks:
+    - name: Config Sheepdog Cluster
+      include: ./sheepdog/sheep-config.yml
+
+# ------------------------------------------------------------------------------
 
 # - name: Qemu
 #   hosts:
