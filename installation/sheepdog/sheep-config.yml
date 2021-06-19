@@ -2,10 +2,10 @@
   include_vars: ./vars/zookeeper.yml
 
 - name: Create Mount Point
-  command: chdir=/mnt mkdir sheep
+  command: chdir=/mnt mkdir -p sheep
 
 - name: Create Mount Point
-  command: chdir=/mnt/sheep mkdir 0
+  command: chdir=/mnt/sheep -p mkdir 0
 
 - name: Config Sheepdog Cluster
   command: sheep -n  /var/lib/sheepdog,/mnt/sheep/0 -c zookeeper:{{ server1 }}:2181,{{ server2 }}:2181,{{server3}}:2181
