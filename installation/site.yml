@@ -32,8 +32,8 @@
 
     - name: Set Zookeeper ID
       copy: >
-      content={{ item.0 + 1 }}
-      dest=/var/lib/zookeeper/myid
+        content={{ item.0 + 1 }}
+        dest=/var/lib/zookeeper/myid
       with_indexed_items: "{{groups['cluster-manager-test']}}"
       when: item.1 == "{{inventory_hostname}}"
     
