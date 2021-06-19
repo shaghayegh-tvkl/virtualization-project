@@ -1,0 +1,25 @@
+---
+- name: Sheepdog
+  hosts:
+    - storage-test
+
+  remote_user: root
+  tasks:
+    - name: Install Sheepdog
+      include: ./sheepdog/sheep-install.yml
+
+# ------------------------------------------------------------------------------
+
+# - name: Qemu
+#   hosts:
+#     - qemu
+
+#   remote_user: root
+#   tasks:
+#     - name: Install Qemu
+#       include: ./qemu/qemu-install.yml
+
+# ------------------------------------------------------------------------------
+
+
+...
