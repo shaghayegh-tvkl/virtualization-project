@@ -22,7 +22,7 @@
     remote_src: yes
 
 - name: Run ./autogen Script
-  shell: /home/ubuntu/sheepdog-0.9.3/autogen
+  shell: /home/ubuntu/sheepdog-0.9.3/autogen.sh
 
 
 - name: Run ./configure Script
