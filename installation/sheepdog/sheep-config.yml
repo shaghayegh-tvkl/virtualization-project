@@ -7,9 +7,6 @@
 - name: Create Mount Point
   command: chdir=/mnt/sheep mkdir 0
 
-- name: Mount Directory
-  command: mount -o remount,user_xattr /mnt/sheep/0
-
 - name: Config Sheepdog Cluster
   command: sheep -n  /var/lib/sheepdog,/mnt/sheep/0 -c zookeeper:{{ server1 }}:2181,{{ server2 }}:2181,{{server3}}:2181
 
