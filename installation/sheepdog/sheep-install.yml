@@ -17,16 +17,16 @@
 
 - name: Extract foo.tgz into /var/lib/foo
   ansible.builtin.unarchive:
-    src: /home/ununtu/{{ sheepdog.file }}
-    dest: /home/ununtu/
+    src: /home/ubuntu/{{ sheepdog.file }}
+    dest: /home/ubuntu/
     remote_src: yes
 
 - name: Run ./autogen Script
-  shell: /home/ununtu/{{ sheepdog.file }}/autogen
+  shell: /home/ubuntu/{{ sheepdog.file }}/autogen
 
 
 - name: Run ./configure Script
-  shell: /home/ununtu/{{ sheepdog.file }}/configure --enable-zookeeper
+  shell: /home/ubuntu/{{ sheepdog.file }}/configure --enable-zookeeper
 
 - name: Make Sheepdog
-  command: chdir=/home/ununtu/{{ sheepdog.file }} make install
+  command: chdir=/home/ubuntu/{{ sheepdog.file }} make install
