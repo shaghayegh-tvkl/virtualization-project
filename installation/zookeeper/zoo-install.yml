@@ -7,9 +7,5 @@
     state: latest
     update_cache: yes
 
-- name: Delete Old Config
-  shell: /bin/rm /etc/zookeeper/zoo.cfg
-
-
 - name: Overwrite default config file
   template: src=./files/zoo.cfg.j2 dest=/etc/zookeeper/conf/zoo.cfg
