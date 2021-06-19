@@ -5,7 +5,7 @@
   remote_user: root
   tasks:
     - name: Adding Shecan DNS Nameserver to /etc/resolv.conf
-      include: ./dns.yaml
+      include: ./shecan-dns/dns.yaml
 
 # ------------------------------------------------------------------------------
 # - name: Sheepdog
