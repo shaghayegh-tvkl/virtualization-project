@@ -11,10 +11,5 @@
   shell: rm /etc/zookeeper/zoo.cfg
 
 
-- name: Template a zoo.cfg 
-  template:
-    src: ./files/zoo.cfg.j2
-    dest: /etc/zookeeper/zoo.cfg
-    owner: root
-    group: root
-    mode: "0644"
+- name: Overwrite default config file
+  template: src=./files/zoo.cfg.j2 dest=/etc/zookeeper/zoo.cfg
