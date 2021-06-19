@@ -12,9 +12,9 @@
 
 
 - name: Template a zoo.cfg 
-  ansible.builtin.template:
+  template:
     src: ./files/zoo.cfg.j2
     dest: /etc/zookeeper/zoo.cfg
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
