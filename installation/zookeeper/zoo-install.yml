@@ -1,0 +1,16 @@
+- name: Include Zookeeper Variables
+  include_vars: ./vars/zookeeper.yml
+
+- name: Install Zookeeper Dependencies
+  apt:
+    name: [zookeeper,libzookeeper-mt-dev]
+    state: latest
+    update_cache: yes
+
+- name: Template a zoo.cfg 
+  ansible.builtin.template:
+    src: ./files/zoo.cfg.j2
+    dest: /etc/zookeeper/zoo.cfg
+    owner: root
+    group: root
+    mode: '0644'

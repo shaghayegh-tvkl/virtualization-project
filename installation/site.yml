@@ -1,14 +1,43 @@
 ---
-- name: Sheepdog
+- name: Configure DNS
   hosts:
     - storage-test
+  remote_user: root
+  tasks:
+    - name: Adding Shecan DNS Nameserver to /etc/resolv.conf
+      include: ./dns.yaml
+
+# ------------------------------------------------------------------------------
+# - name: Sheepdog
+#   hosts:
+#     - storage-test
+
+#   remote_user: root
+#   tasks:
+#     - name: Install Sheepdog
+#       include: ./sheepdog/sheep-install.yml
+
+# ------------------------------------------------------------------------------
+
+- name: Configure Cluster Manager
+  hosts:
+    - cluster-manager-test
 
   remote_user: root
   tasks:
-    - name: Install Sheepdog
-      include: ./sheepdog/sheep-install.yml
+    - name: Install Java
+      include: ./java/java-install.yml
+    - name: Install Zookeeper
+      include: ./zookeeper/zoo-install.yml
 
+    - name: Set Zookeeper Id
+      set_fact: zk_id={{item.0 + 1}}
+      with_indexed_items: "{{groups['tag_Name_MESOS_MASTER']}}"
+      when: item.1 == "{{inventory_hostname}}"
+
+    
 # ------------------------------------------------------------------------------
+
 
 # - name: Qemu
 #   hosts:
