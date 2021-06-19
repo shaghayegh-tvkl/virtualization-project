@@ -34,7 +34,9 @@
       set_fact: zk_id={{item.0 + 1}}
       with_indexed_items: "{{groups['tag_Name_MESOS_MASTER']}}"
       when: item.1 == "{{inventory_hostname}}"
-
+    
+    - name: Start Zookeeper
+      command: chdir=/usr/share/zookeeper/bin ./zkCli.sh
     
 # ------------------------------------------------------------------------------
 
