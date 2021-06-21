@@ -21,8 +21,8 @@
 
 - name: Configure Cluster Manager
   hosts:
-    - cluster-manager-test
-
+    - storage-test
+    
   remote_user: root
   tasks:
     - name: Install Java
