@@ -2,7 +2,6 @@ server {
     listen 80;
     listen [::]:80;
     server_name {{ ServerIP }};
-    return 302 https://$server_name$request_uri;
 }
 
 upstream CephDash {
