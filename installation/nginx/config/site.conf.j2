@@ -1,9 +1,3 @@
-server {
-    listen 80;
-    listen [::]:80;
-    server_name {{ ServerIP }};
-}
-
 upstream CephDash {
     server {{CephIP}}:{{CephDashboardPort}};
 }
@@ -25,7 +19,7 @@ upstream AlertManager {
 
 server {
 
-  server_name {{ ServerIP }};
+  listen 80;
 
   location /ceph {
     proxy_pass http://CephDash;
