@@ -1,0 +1,8 @@
+- name: Install Packages
+  apt:
+    name: [libvirt-daemon,libvirt-admin,libvirt-client,libvirt-daemon-kvm,libvirt-daemon-driver-qemu,libvirt-daemon-driver-network,libvirt-daemon-driver-storage,libvirt-daemon-driver-storage-core,virt-install]
+    state: latest
+    update_cache: yes
+
+
+

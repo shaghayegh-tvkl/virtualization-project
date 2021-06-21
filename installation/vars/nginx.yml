@@ -1,0 +1,6 @@
+ServerIP: 37.152.178.84
+CephIP: 192.168.54.12
+CephDashboardPort: 8443
+GrafanaDashboardPort: 3000
+PrometheusPort: 9093
+AlertmanagerPort: 3000

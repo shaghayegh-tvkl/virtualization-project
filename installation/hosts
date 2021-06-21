@@ -1,28 +1,16 @@
 [qemu]
-storage-1
-storage-2
+virtualization-1
+virtualization-1
+
 
 [storage]
-storage-1
-storage-2
-storage-3
+ceph-mon-1
+ceph-mon-2
+ceph-mon-3
+ceph-osd-1
+ceph-osd-2
+ceph-osd-3
 
-[cluster-manager]
-storage-1
-storage-2
-storage-3
 
-[qemu-test]
-test-1
-test-2
-
-[storage-test]
-test-1
-test-2
-test-3
-
-[cluster-manager-test]
-test-1
-test-2
-test-3
-
+[manager]
+manager-node

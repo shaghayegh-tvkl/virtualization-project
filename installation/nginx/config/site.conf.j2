@@ -1,0 +1,56 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name {{ ServerIP }};
+    return 302 https://$server_name$request_uri;
+}
+
+upstream CephDash {
+    server {{CephIP}}:{{CephDashboardPort}};
+}
+
+upstream GrafanaDash {
+    server {{CephIP}}:{{GrafanaDashboardPort}};
+}
+
+upstream PrometheusDash {
+    server {{CephIP}}:{{PrometheusPort}};
+}
+
+
+upstream AlertManager {
+    server {{CephIP}}:{{AlertmanagerPort}};
+}
+
+
+
+server {
+
+  server_name {{ ServerIP }};
+
+  location /ceph {
+    proxy_pass http://CephDash;
+
+  }
+
+  location /grafana {
+    proxy_pass http://GrafanaDash;
+
+  }
+
+  
+  location /prometheus {
+    proxy_pass http://PrometheusDash;
+
+  }
+
+  location /alert {
+    proxy_pass http://AlertManager;
+
+  }
+
+
+
+
+
+}

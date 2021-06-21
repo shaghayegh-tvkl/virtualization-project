@@ -1,0 +1,25 @@
+- name: Include Nginx Variables
+  include_vars: ./vars/nginx.yml
+
+- name: "create www directory"
+  file:
+    path: /var/www/{{ServerIP}}
+    state: directory
+    mode: "0775"
+    owner: "root"
+    group: "root"
+
+- name: delete default nginx site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: copy nginx site.conf
+  template:
+    src: ./config/site.conf.j2
+    dest: /etc/nginx/sites-enabled/{{ServerIP}}
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart Nginx
+
