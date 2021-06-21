@@ -22,5 +22,5 @@
   command: nmcli con modify bridge-br0 ipv4.dns {{ DNS }}
 
 - name: Up Bridge Slave
-  command: nmcli con up bridge-slave-eth0
+  command: ifconfig br0 up
 
