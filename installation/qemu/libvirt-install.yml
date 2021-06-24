@@ -13,3 +13,6 @@
   service:
     name: libvirtd
     state: started
+
+- name: Update dnf 
+  command: dnf update
