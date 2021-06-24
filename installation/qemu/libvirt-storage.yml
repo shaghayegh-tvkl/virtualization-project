@@ -21,8 +21,8 @@
 
 - name: Copy pool.xml file
   template:
-    src: ./files/pecret.xml.j2
-    dest: /root/configuration/pecret.xml
+    src: ./files/secret.xml.j2
+    dest: /root/configuration/secret.xml
     owner: root
     group: root
     mode: "0644"
