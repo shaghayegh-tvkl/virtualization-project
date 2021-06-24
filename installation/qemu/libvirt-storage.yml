@@ -21,8 +21,8 @@
 
 - name: Copy pool.xml file
   template:
-    src: ./files/secret.xml.j2
-    dest: /root/configuration/secret.xml
+    src: ./files/pool.xml.j2
+    dest: /root/configuration/pool.xml
     owner: root
     group: root
     mode: "0644"
