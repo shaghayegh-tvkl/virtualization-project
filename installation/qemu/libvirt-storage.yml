@@ -31,8 +31,8 @@
   command: chdir=/root/configuration virsh pool-define pool.xml
 
 - name: Start Pool
-  command: virsh pool-start backendpool
+  command: virsh pool-start storagepool
 
 - name: Set as Pool as Autostart
-  command: virsh pool-autostart backendpool
+  command: virsh pool-autostart storagepool
 
