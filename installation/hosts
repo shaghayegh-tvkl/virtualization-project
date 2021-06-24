@@ -1,6 +1,6 @@
-[qemu]
+[virtualization]
 virtualization-1
-virtualization-1
+virtualization-2
 
 
 [storage]
@@ -11,11 +11,9 @@ ceph-osd-1
 ceph-osd-2
 ceph-osd-3
 
+[storage-monitor]
+ceph-mon-1
+
 
 [manager]
 manager-node
-
-[storage-test]
-storage-1
-storage-2
-storage-3

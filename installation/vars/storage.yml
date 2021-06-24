@@ -1,0 +1,4 @@
+- name: Include Storage Variables
+  include_vars: ./vars/storage.yml
+
+
