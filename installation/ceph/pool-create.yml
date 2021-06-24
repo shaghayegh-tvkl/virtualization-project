@@ -1,6 +1,11 @@
 - name: Create RBD Pool
   command: ceph osd pool create libvirt-pool 
 
+
+- name: Init RBD Pool
+  command: rbd pool init libvirt-pool
+
+
 - name: Create RBD Pool Credentials
   command: ceph auth get-or-create client.libvirt mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=libvirt-pool'
 
