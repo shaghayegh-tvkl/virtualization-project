@@ -14,9 +14,7 @@
 
 #   remote_user: root
 #   tasks:
-#     # - name: Create Slave Bridge
-#     #   include: ./qemu/bridge-create.yml
-
+  
 #     - name: Install Qemu
 #       include: ./qemu/libvirt-install.yml
 
@@ -40,6 +38,9 @@
 
   remote_user: root
   tasks:
+
+    - name: Create Slave Bridge
+      include: ./qemu/bridge-create.yml
 
     - name: Create Libvirt Storage Pool
       include: ./qemu/libvirt-storage.yml
