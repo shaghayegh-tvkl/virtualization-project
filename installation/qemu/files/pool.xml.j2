@@ -1,0 +1,10 @@
+<pool type="rbd">
+  <name>vmpool</name>
+  <source>
+    <name>libvirt-pool</name>
+    <host name='{{ip}}'/>
+    <auth username='libvirt' type='ceph'>
+      <secret uuid='{{uuid}}'/>
+    </auth>
+  </source>
+</pool>

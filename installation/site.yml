@@ -1,7 +1,6 @@
 ---
 - name: Configure DNS
-  hosts:
-    - storage-test
+  hosts: all
   remote_user: root
   tasks:
     - name: Adding Shecan DNS Nameserver to /etc/resolv.conf
@@ -9,29 +8,41 @@
 
 # ------------------------------------------------------------------------------
 
-- name: Qemu
-  hosts:
-    - virtualization
+# - name: Libvirt
+#   hosts:
+#     - virtualization
 
-  remote_user: root
-  tasks:
-    # - name: Create Slave Bridge
-    #   include: ./qemu/bridge-create.yml
+#   remote_user: root
+#   tasks:
+#     # - name: Create Slave Bridge
+#     #   include: ./qemu/bridge-create.yml
 
-    - name: Install Qemu
-      include: ./qemu/libvirt-install.yml
+#     - name: Install Qemu
+#       include: ./qemu/libvirt-install.yml
+
+# ------------------------------------------------------------------------------
+
+# - name: Ceph
+#   hosts:
+#     - storage-monitor
+
+#   remote_user: root
+#   tasks:
+
+#     - name: Create RBD Pool
+#       include: ./ceph/pool-create.yml
 
 # ------------------------------------------------------------------------------
 
 - name: Ceph
   hosts:
-    - storage-monitor
+    - virtualization
 
   remote_user: root
   tasks:
 
-    - name: Create RBD Pool
-      include: ./ceph/pool-create.yml
+    - name: Create Libvirt Storage Pool
+      include: ./qemu/libvirt-storage.yml
 
 # ------------------------------------------------------------------------------
 

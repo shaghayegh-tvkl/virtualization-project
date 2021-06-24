@@ -1,4 +1,0 @@
-sheepdog:
-  url: https://github.com/sheepdog/sheepdog/archive/v0.9.3.tar.gz
-  project_dir: /home/ubuntu
-  file: sheepdog-v0.9.3.tar.gz

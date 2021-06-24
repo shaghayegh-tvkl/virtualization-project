@@ -4,8 +4,12 @@
     state: latest
     update_cache: yes
 
-- name: Start Services
+- name: Enable Services
   service:
     name: libvirtd
     enabled: yes
+
+- name: Start Services
+  service:
+    name: libvirtd
     state: started
