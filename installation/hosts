@@ -1,6 +1,6 @@
 [virtualization]
-virtualization-1
-virtualization-2
+ceph-mon-1
+ceph-mon-2
 
 
 [storage]

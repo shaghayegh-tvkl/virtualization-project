@@ -8,15 +8,15 @@
 
 # ------------------------------------------------------------------------------
 
-# - name: Libvirt
-#   hosts:
-#     - virtualization
+- name: Libvirt
+  hosts:
+    - virtualization
 
-#   remote_user: root
-#   tasks:
+  remote_user: root
+  tasks:
   
-#     - name: Install Qemu
-#       include: ./qemu/libvirt-install.yml
+    - name: Install Qemu
+      include: ./qemu/libvirt-install.yml
 
 # ------------------------------------------------------------------------------
 
