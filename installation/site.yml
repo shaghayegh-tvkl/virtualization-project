@@ -1,10 +1,10 @@
 ---
-# - name: Configure DNS
-#   hosts: all
-#   remote_user: root
-#   tasks:
-#     - name: Adding Shecan DNS Nameserver to /etc/resolv.conf
-#       include: ./shecan-dns/dns.yaml
+- name: Configure DNS
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: Adding Shecan DNS Nameserver to /etc/resolv.conf
+      include: ./shecan-dns/dns.yaml
 
 # ------------------------------------------------------------------------------
 
@@ -56,7 +56,7 @@
 
     - name: Create Redis and Postgres Containers
       include: ./database/database-install.yml
-      
+
 # ------------------------------------------------------------------------------
 
 
