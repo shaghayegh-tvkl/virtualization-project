@@ -8,15 +8,15 @@
 
 # ------------------------------------------------------------------------------
 
-- name: Libvirt
-  hosts:
-    - virtualization
+# - name: Libvirt
+#   hosts:
+#     - virtualization
 
-  remote_user: root
-  tasks:
+#   remote_user: root
+#   tasks:
   
-    - name: Install Qemu
-      include: ./qemu/libvirt-install.yml
+#     - name: Install Qemu
+#       include: ./qemu/libvirt-install.yml
 
 # ------------------------------------------------------------------------------
 
@@ -32,20 +32,35 @@
 
 # ------------------------------------------------------------------------------
 
-- name: Storage Pool
+# - name: Storage Pool
+#   hosts:
+#     - virtualization
+
+#   remote_user: root
+#   tasks:
+
+#     - name: Create Slave Bridge
+#       include: ./qemu/bridge-create.yml
+
+#     - name: Create Libvirt Storage Pool
+#       include: ./qemu/libvirt-storage.yml
+
+# ------------------------------------------------------------------------------
+
+- name: Database
   hosts:
-    - virtualization
+    - database
 
   remote_user: root
   tasks:
 
-    - name: Create Slave Bridge
-      include: ./qemu/bridge-create.yml
-
-    - name: Create Libvirt Storage Pool
-      include: ./qemu/libvirt-storage.yml
-
+    - name: Create Redis and Postgres Containers
+      include: ./database/database-install.yml
+      
 # ------------------------------------------------------------------------------
+
+
+
 
 
 # - name: Install Nginx on manager

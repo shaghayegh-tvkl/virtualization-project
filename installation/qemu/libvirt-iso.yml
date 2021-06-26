@@ -1,0 +1,17 @@
+- name: Install Packages
+  dnf:
+    name: [virt-install,virt-viewer,libguestfs-tools,wget,libvirt-daemon-config-network,libvirt-nss,libgcrypt]
+    state: latest
+    update_cache: yes
+
+- name: Download ISO file
+  command: chdir=/root/configuration wget https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2.xz
+
+- name: Decompress CentOS File
+  command: chdir=/root/configuration xz -v -d CentOS-7-x86_64-GenericCloud.qcow2.xz
+
+- name: Create SSH Key
+  command: ssh-keygen 
+
+#sed -i -e 's/#user = "root"/user = "root"/g' /etc/libvirt/qemu.conf 
+#sed -i -e 's/#group = "root"/group = "root"/g' /etc/libvirt/qemu.conf 

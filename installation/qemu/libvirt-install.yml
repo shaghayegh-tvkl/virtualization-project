@@ -15,4 +15,4 @@
     state: started
 
 - name: Update dnf 
-  command: dnf update
+  command: dnf update -y

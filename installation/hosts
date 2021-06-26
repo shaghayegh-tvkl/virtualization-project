@@ -2,6 +2,9 @@
 ceph-mon-1
 ceph-mon-2
 
+[database]
+virtualization-manager
+
 
 [storage]
 ceph-mon-1

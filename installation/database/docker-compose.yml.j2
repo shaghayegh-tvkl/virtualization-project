@@ -1,0 +1,45 @@
+version: '3'
+services:
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: pg_db
+      POSTGRES_PASSWORD: password
+    volumes:
+      - /var/lib/postgres
+      - ./dbscripts/postgres:/docker-entrypoint-initdb.d
+
+  redis:
+    image: shaghayeghtvkl/shaghayegh-redis:1.0
+    ports:
+      - 6379:6379
+
+
+  redis-exporter:
+    depends_on:
+        - redis
+    image: oliver006/redis_exporter:v1.12.0-alpine
+    ports:
+      - 9121:9121
+    networks:
+      - test_network
+    command:
+      - '--redis.addr=redis://192.168.0.5:6379'
+
+
+  postgres-exporter:
+    depends_on:
+      - postgres
+
+    image: wrouesnel/postgres_exporter:v0.8.0
+    restart: always
+    environment:
+      - DATA_SOURCE_URI=postgres:5432/postgres?sslmode=disable
+      - DATA_SOURCE_USER=postgres
+      - DATA_SOURCE_PASS=password
+    ports:
+      - "9187:9187"
