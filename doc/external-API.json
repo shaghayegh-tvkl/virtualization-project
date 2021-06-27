@@ -1,0 +1,210 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Virtualization Internal APIs Documentation",
+        "description": ""
+    },
+    "host": "192.168.54.21:8000",
+    "basePath": "/api/v1",
+    "tags": [
+        {
+            "name": "VM",
+            "description": "APIs for categories in the system"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/vm":{
+            "get": {
+                "tags": [
+                    "VM"
+                ],
+                "summary": "List All virtual machines",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Instances"
+                        }
+                    }
+                }
+            }
+        },
+
+        "/vm": {
+            "post": {
+                "tags": [
+                    "VM"
+                ],
+                "name": "VM",
+                "summary": "Run Create VM Script and set cron jobs",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/VM"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create OK - Virtual Machine Loading..."
+                    }
+                }
+            }
+        },
+        "/vm/ip": {
+            "post": {
+                "tags": [
+                    "VM"
+                ],
+                "name": "Check VM IP",
+                "summary": "Check to see if an ip has been assigned to the vm with given name",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/Name"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "IP Assigned"
+                    }
+                }
+            }
+        },
+        "/vm/status": {
+            "post": {
+                "tags": [
+                    "VM"
+                ],
+                "name": "Check VM IP",
+                "summary": "Check to see if the vm with given name is running",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/Name"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Status Running"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "VM": {
+            "required": [
+                "name",
+                "ram",
+                "cpu",
+                "disk"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "ram": {
+                    "type": "string"
+                },
+                "cpu": {
+                    "type": "string"
+                },
+                "disk": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "name": "vm-test",
+                "ram": "1024",
+                "cpu": "2",
+                "disk": "10"
+            }
+        },
+
+        "Instance": {
+            "required": [
+                "name",
+                "ram",
+                "cpu",
+                "disk",
+                "status",
+                "ip"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "ram": {
+                    "type": "string"
+                },
+                "cpu": {
+                    "type": "string"
+                },
+                "disk": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "ip": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "name": "vm-test",
+                "ram": "1024",
+                "cpu": "2",
+                "disk": "10",
+                "status": "running",
+                "ip": "192.168.122.1"
+            }
+        },
+
+        "Instances": {
+            "type": "array",
+            "$ref": "#/definitions/Instance"
+        },
+        
+        "Name": {
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "name": "vm-test"
+            }
+        }
+    }
+}
