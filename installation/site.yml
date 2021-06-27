@@ -54,6 +54,9 @@
   remote_user: root
   tasks:
 
+    - name: Install Docker
+      include: ./docker/docker-install.yml
+
     - name: Create Redis and Postgres Containers
       include: ./database/database-install.yml
 
