@@ -62,8 +62,7 @@
 
 # ------------------------------------------------------------------------------
 
----
-- name: Install nginx and java on CentOs 7
+- name: Install Node.js
   hosts: 
     - external-API
     - internal-API
