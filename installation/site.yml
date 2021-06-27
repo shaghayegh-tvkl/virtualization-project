@@ -70,7 +70,6 @@
 
   remote_user: root
   tasks:
-    - name: install 
     - include_role:
         name: "geerlingguy.nodejs"
       when: "'geerlingguy.nodejs' in roles"
