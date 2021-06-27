@@ -3,8 +3,8 @@ const statusCode = require("http-status-codes");
 const log4js = require("log4js");
 const path = require("path");
 const fs = require("fs");
-const json2excel = require("node-json-xlsx");
 const axios = require("axios");
+const shell = require('shelljs')
 
 const op = Sequelize.Op;
 
@@ -32,25 +32,50 @@ module.exports = new (class vmController extends controller {
                 disk: req.body.disk
             };
 
-            const redisDatabase = require(`${config.path.models}/redis`);
+            const redisDatabase = require(`${config.path.models}/RedisDB`);
             const redisDatabaseObj = new redisDatabase();
 
-            redisDatabaseObj.add(data.name,)
+            redisDatabaseObj.add(config.redis.index,
+                data.name,
+                data.name, require('os').networkInterfaces()[eth0][0].address,
+                (error) => {
+                    if (error) {
+                        logger.error("createVM Error -", error);
+                        return res.status(statusCode.METHOD_FAILURE).json({
+                            status: statusCode.METHOD_FAILURE,
+                            message: "Error Adding VM Data To Redis",
+                        });
+                    }
+                    else {
+                        shell.exec('/root/configuration/createVM.sh')
 
-            this.VM.create(data)
-                .then((timeline) => {
-                    console.log(timeline);
-                    return res.status(statusCode.CREATED).json({
-                        message: "Create OK - Virtual Machine Loading...",
-                    });
+                        var vmAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.VM} \n`
+                        var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
+
+                        fs.appendFileSync('/var/spool/cron/root', "*/3 * * * * " + vmAPI)
+                        fs.appendFileSync('/var/spool/cron/root', "*/3 * * * * " + ipAPI)
+
+                        this.VM.create(data)
+                            .then((vm) => {
+                                logger.info("createVM -", vm)
+                                console.log("createVM -", vm)
+
+                                return res.status(statusCode.CREATED).json({
+                                    message: "Create OK - Virtual Machine Loading...",
+                                });
+                            })
+                            .catch((DBerror) => {
+                                logger.error("createVM Error -", DBerror);
+                                return res.status(statusCode.METHOD_FAILURE).json({
+                                    status: statusCode.METHOD_FAILURE,
+                                    message: "Error Adding VM Data To Postgres",
+                                });
+                            });
+                    }
+
                 })
-                .catch((error) => {
-                    logger.error("createVM Error -", error);
-                    return res.status(statusCode.METHOD_FAILURE).json({
-                        status: statusCode.METHOD_FAILURE,
-                        message: "Error Adding VM Data To Database",
-                    });
-                });
+
+
         } catch (error) {
             logger.error("createVM Error -", error);
             return res.status(statusCode.INTERNAL_SERVER_ERROR).json({
@@ -60,71 +85,86 @@ module.exports = new (class vmController extends controller {
         }
     }
 
+    async checkVMStatus(req, res) {
 
+        try {
+            let data = {
+                status: ""
+            };
+
+            shell.exec('/root/configuration/createVM.sh')
+
+            var vmAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.VM} \n`
+            var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
+
+            fs.appendFileSync('/var/spool/cron/root', "*/3 * * * * " + vmAPI)
+            fs.appendFileSync('/var/spool/cron/root', "*/3 * * * * " + ipAPI)
+
+                .update(data, {
+                    where: {
+                        name: data.name
+                    },
+                    limit: 1,
+                })
+                .then((vm) => {
+                    var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
+
+
+
+
+                    console.log(timeline);
+                    return res.status(statusCode.CREATED).json({
+                        message: "Create OK - Virtual Machine Loading...",
+                    });
+                })
+                .catch((DBerror) => {
+                    logger.error("createVM Error -", DBerror);
+                    return res.status(statusCode.METHOD_FAILURE).json({
+                        status: statusCode.METHOD_FAILURE,
+                        message: "Error Adding VM Data To Postgres",
+                    });
+                });
+
+
+
+        } catch (error) {
+            logger.error("createVM Error -", error);
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).json({
+                status: statusCode.INTERNAL_SERVER_ERROR,
+                message: "Server Error",
+            });
+        }
+
+    }
+
+    async checkVMIP(req, res) {
+
+
+    }
 
     // Methodes
-
-    async create(query, userId) {
-        return new Promise((res, rej) => {
-            this.setDay(query.date, (error, calendar) => {
-                if (error) {
-                    rej(error);
-                }
-
-                console.log(calendar);
-
-                if (calendar) {
-                    let timelineData = {
-                        date: moment(query.date, "jYYYY-jMM-jDD").format("YYYY-MM-DD"),
-                        pdate: query.date,
-                        day: calendar.day,
-                        entrance_time: query.entrance,
-                        exit_time: query.exit,
-                        efficient_time: query.efficient,
-                        home_time: query.home,
-                        force_time: query.home,
-                        leave_time: query.leave,
-                        overtime: query.overtime,
-                        daily_task: query.task,
-                        employeeId: userId,
-                    };
-
-                    this.Timeline.create(timelineData)
-                        .then((timeline) => {
-                            res(timeline);
-                        })
-                        .catch((error) => {
-                            rej(error);
-                        });
-                }
-            });
-        });
-    }
 
     async update(query, userId) {
         console.log(query);
 
         return new Promise((res, rej) => {
-            let timelineData = {
-                entrance_time: query.entrance,
-                exit_time: query.exit,
-                efficient_time: query.efficient,
-                home_time: query.home,
-                force_time: query.home,
-                leave_time: query.leave,
-                overtime: query.overtime,
-                daily_task: query.task,
+            let name = req.body.name
+
+            let data = {
+                ip: ""
             };
 
-            this.Timeline.update(timelineData, {
+            this.VM.update(data, {
                 where: {
-                    employeeId: userId,
-                    date: moment(query.date, "jYYYY-jMM-jDD").format("YYYY-MM-DD"),
+                    name: data.name
                 },
                 limit: 1,
             })
-                .then((timeline) => {
-                    res(timeline);
+                .then((vm) => {
+                    var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
+
+
+
                 })
                 .catch((error) => {
                     rej(error);
