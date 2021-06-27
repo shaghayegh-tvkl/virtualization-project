@@ -69,9 +69,11 @@
 
   remote_user: root
   tasks:
-    - include_role:
-        name: "geerlingguy.nodejs"
-      when: "'geerlingguy.nodejs' in roles"
+    - block:
+      - include_role:
+          name: "geerlingguy.nodejs"
+        when: "'geerlingguy.nodejs' in roles"
+
 
 
 
