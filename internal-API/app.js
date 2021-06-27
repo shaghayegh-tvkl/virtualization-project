@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 const log4js = require("log4js");
+const apiMetrics = require('prometheus-api-metrics');
 
 const app = express();
 
@@ -38,12 +39,16 @@ app.use(log4js.connectLogger(logger, { level: "info" }));
 const modelHandler = require(`${config.path.models}/index`);
 const routesHandler = require(`${config.path.routes}/index`);
 
-const redisDatabase = require(`${config.path.models}/redis`);
+const redisDatabase = require(`${config.path.models}/RedisDB`);
 const redisDatabaseObj = new redisDatabase();
 redisDatabaseObj.connectToDatabase();
 
 const swaggerUi = require("swagger-ui-express"), swaggerDocument = require("../doc/internal-API.json");
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
+app.use(apiMetrics());
+
 
 app.use(cors());
 
