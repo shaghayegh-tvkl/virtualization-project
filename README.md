@@ -2,6 +2,8 @@
 
 
 # Components
+This is the componenet diagram for this project:
+
 
 ## Ceph Cluster
 
