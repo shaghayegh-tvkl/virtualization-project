@@ -20,3 +20,11 @@ ceph-mon-1
 
 [manager]
 manager-node
+
+[enternal-API]
+api-1
+api-2
+
+[internal-API]
+ceph-mon-1
+ceph-mon-2

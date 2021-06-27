@@ -47,21 +47,33 @@
 
 # ------------------------------------------------------------------------------
 
-- name: Database
-  hosts:
-    - database
+# - name: Database
+#   hosts:
+#     - database
 
-  remote_user: root
-  tasks:
+#   remote_user: root
+#   tasks:
 
-    - name: Install Docker
-      include: ./docker/docker-install.yml
+#     - name: Install Docker
+#       include: ./docker/docker-install.yml
 
-    - name: Create Redis and Postgres Containers
-      include: ./database/database-install.yml
+#     - name: Create Redis and Postgres Containers
+#       include: ./database/database-install.yml
 
 # ------------------------------------------------------------------------------
 
+---
+- name: Install nginx and java on CentOs 7
+  hosts: 
+    - external-API
+    - internal-API
+
+  remote_user: root
+  tasks:
+    - name: install 
+    - include_role:
+        name: "geerlingguy.nodejs"
+      when: "'geerlingguy.nodejs' in roles"
 
 
 
