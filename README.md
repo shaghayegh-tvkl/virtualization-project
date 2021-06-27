@@ -1,33 +1,5 @@
 # Virtualization Project
 
-# Tools
-
-## Libvrit
-
-
-## Cloud-init
-
-
-## Ceph
-
-## Ansible
-
-
-## HAProxy
-
-
-## Node.js
-
-## Redis
-
-
-## PostgreSQL
-
-
-## Prometheus
-
-
-## Grafana
 
 # Components
 
@@ -57,6 +29,36 @@
 ## Manager Node
 
 
+
+
+# Tools
+
+## Libvrit
+
+
+## Cloud-init
+
+
+## Ceph
+
+## Ansible
+
+
+## HAProxy
+
+
+## Node.js
+
+## Redis
+
+
+## PostgreSQL
+
+
+## Prometheus
+
+
+## Grafana
 
 # API Scenario
 
