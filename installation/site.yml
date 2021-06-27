@@ -62,17 +62,15 @@
 
 # ------------------------------------------------------------------------------
 
-- name: Install Node.js
+- name: Node.js
   hosts: 
     - external-API
     - internal-API
 
   remote_user: root
   tasks:
-    - block:
-      - include_role:
-          name: "geerlingguy.nodejs"
-        when: "'geerlingguy.nodejs' in roles"
+    - name: Install Node.js
+      include: ./node/node-install.yml
 
 
 

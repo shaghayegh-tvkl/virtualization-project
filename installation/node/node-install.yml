@@ -1,0 +1,5 @@
+- name: Install Node.js 
+  dnf:
+    name: nodejs
+    state: latest
+    update_cache: yes
