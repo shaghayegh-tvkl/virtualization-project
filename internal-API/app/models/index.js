@@ -1,5 +1,8 @@
 const Sequelize = require("sequelize");
 const db = {};
+var log4js = require("log4js")
+var logger = log4js.getLogger("database")
+
 
 const sequelize = new Sequelize({
   dialect: "postgres",
@@ -15,10 +18,13 @@ const connect = async () => {
   await sequelize
     .authenticate()
     .then(() => {
-      console.log("Connection has been established successfully.");
+      logger.info("Connection to Postgres has been established successfully.");
+      console.log("Connection to Postgres has been established successfully.");
+      
     })
-    .catch((error) => {
-      console.log("Unable to connect to the database: ", error);
+    .catch((error) => { 
+      logger.info("Unable to connect to postgres: ", error);
+      console.log("Unable to connect to postgres: ", error);
     });
 };
 

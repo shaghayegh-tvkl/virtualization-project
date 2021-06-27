@@ -19,8 +19,15 @@ module.exports = {
     password: "password",
   },
 
+  redis: {
+    host: "192.168.54.21",
+    port: "6379",
+    index: 0
+
+  },
+
   api: {
-    IP: "http://localhost:8000/api/employee/getsubemployee",
-    VM: "http://192.168.96.240:8000/api/employee/getemployeestatus"
+    IP: "http://localhost:8000/api/v1/vm/ip",
+    VM: "http://localhost:8000/api/v1/vm/status"
   }
 };
