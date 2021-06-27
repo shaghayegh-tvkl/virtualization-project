@@ -21,7 +21,7 @@ ceph-mon-1
 [manager]
 manager-node
 
-[enternal-API]
+[external-API]
 api-1
 api-2
 
