@@ -6,7 +6,7 @@ const sequelize = db.sequelize;
 const model = Sequelize.Model;
 
 class VM extends model { }
-vm.init(
+VM.init(
   {
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     name: {

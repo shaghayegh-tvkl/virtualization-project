@@ -1,9 +1,9 @@
 var redis = require("redis");
-var client = redis.createClient(config.database.redis.port, config.database.CacheDB.host);
+var client = redis.createClient(config.redis.port, config.redis.host);
 var log4js = require("log4js")
 var logger = log4js.getLogger("database")
 
-module.exports = class redis_db {
+module.exports = class RedisDB {
 
     async connectToDatabase() {
 
