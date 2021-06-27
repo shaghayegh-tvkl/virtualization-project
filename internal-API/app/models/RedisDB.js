@@ -55,8 +55,8 @@ module.exports = class RedisDB {
     }
 
     delete(index, key, callback) {
-        client.select(index, (err, res) => {
-            client.keys('*', (err, results) => {
+        client.select(index, (errSelect, res) => {
+            client.keys('*', (errKey, results) => {
                 client.del(key, error => {
                     callback(error)
                 })
