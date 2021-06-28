@@ -5,7 +5,7 @@
     update_cache: yes
 
 - name: Download ISO file
-  command: wget https://cloud-images.ubuntu.com/bionic/current/baseimg=bionic-server-cloudimg-amd64.img -O /root/configuration/ubuntu.img
+  command: wget https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img -O /root/configuration/ubuntu.img
 
 - name: Change qemu user
   command: sed -i -e 's/#user = "root"/user = "root"/g' /etc/libvirt/qemu.conf 
