@@ -1,0 +1,10 @@
+- name: Copy compose file
+  template:
+    src: ./docker-compose.yml.j2
+    dest: /root/docker-compose.yml
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Up Docker Containers
+  command: chdir=/root docker-compose up -d
