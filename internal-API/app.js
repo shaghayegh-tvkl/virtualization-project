@@ -92,6 +92,6 @@ app.listen(config.port, config.ip, () => {
   modelHandler.connect();
 
   // Create tables
-  modelHandler.sync();
+  // modelHandler.sync();
 
 });
