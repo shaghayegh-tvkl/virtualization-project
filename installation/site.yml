@@ -15,8 +15,8 @@
 #   remote_user: root
 #   tasks:
   
-#     - name: Install Qemu
-#       include: ./qemu/libvirt-install.yml
+#     - name: Install Libvirt
+#       include: ./libvirt/libvirt-install.yml
 
 # ------------------------------------------------------------------------------
 
@@ -39,14 +39,22 @@
 #   remote_user: root
 #   tasks:
 
-#     - name: Create Slave Bridge
-#       include: ./qemu/bridge-create.yml
-
 #     - name: Create Libvirt Storage Pool
-#       include: ./qemu/libvirt-storage.yml
+#       include: ./libvirt/libvirt-storage.yml
 
 # ------------------------------------------------------------------------------
 
+- name: Virual Machine Configuration
+  hosts:
+    - virtualization
+
+  remote_user: root
+  tasks:
+
+    - name: Create Libvirt Config Files
+      include: ./libvirt/libvirt-vm.yml
+
+# ------------------------------------------------------------------------------
 # - name: Database
 #   hosts:
 #     - database
@@ -62,46 +70,66 @@
 
 # ------------------------------------------------------------------------------
 
-- name: Node.js
+# - name: Node.js
+#   hosts: 
+#     - external-API
+#     - internal-API
+
+#   remote_user: root
+#   tasks:
+#     - name: Install Node.js
+#       include: ./node/node-install.yml
+
+# ------------------------------------------------------------------------------
+
+- name: External APIs
+  hosts: external-API
+  remote_user: root
+  tasks:
+    - name: Install HAProxy
+      include: ./haproxy/haproxy-install.yml
+    
+    - name: Copy and Run Code
+      include: ./api/external-api.yml
+
+    # - name: Update and Restart Code
+    #   include: ./api/external-api-update.yml
+
+    # - name: Config HAProxy
+    #   include: 
+
+
+# ------------------------------------------------------------------------------
+
+- name: Internal APIs
+  hosts: internal-API
+  remote_user: root
+  tasks:
+    - name: Install HAProxy
+      include: ./haproxy/haproxy-install.yml
+    
+    - name: Copy and Run Code
+      include: ./api/internal-api.yml
+
+    # - name: Update and Restart Code
+    #   include: ./api/internal-api-update.yml
+
+    # - name: Config HAProxy
+    #   include: 
+
+# ------------------------------------------------------------------------------
+
+- name: Monitoring
   hosts: 
-    - external-API
-    - internal-API
+    - manager-node
 
   remote_user: root
   tasks:
-    - name: Install Node.js
-      include: ./node/node-install.yml
+    - name: Install Docker
+      include: ./docker/docker-install.yml
 
+    - name: Create Prometheus and Grafana Containers
+      include: ./monitoring/mon-tools-install.yml
 
-
-
-
-# - name: Install Nginx on manager
-#   hosts:
-#     - manager
-#   remote_user: root
-#   tasks:
-#     # - name: Install Nginx on Ubuntu
-#     #   include: ./nginx/nginx-install.yml
-#     #   when: (ansible_facts['distribution'] == "Ubuntu")
-    
-#     # - name: Create Keys and Passwords for Nginx on Ubuntu
-#     #   include: ./nginx/auth.yml
-#     #   when: (ansible_facts['distribution'] == "Ubuntu")
-    
-#     - name: Configure Nginx  
-#       include: ./nginx/nginx-config.yml
-#       when: (ansible_facts['distribution'] == "Ubuntu")
-    
-#   handlers:
-#     - name: Start Nginx
-#       service:
-#         name: nginx
-#         state: started
-
-#     - name: Restart Nginx
-#       service:
-#         name: nginx
-#         state: restarted
 
 ...
