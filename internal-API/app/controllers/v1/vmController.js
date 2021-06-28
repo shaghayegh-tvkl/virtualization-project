@@ -5,6 +5,8 @@ const path = require("path");
 const fs = require("fs");
 const axios = require("axios");
 const shell = require('shelljs')
+const { exec } = require('child_process');
+
 
 const op = Sequelize.Op;
 
@@ -49,28 +51,43 @@ module.exports = new (class vmController extends controller {
                     else {
                         shell.exec('/root/configuration/createVM.sh')
 
-                        var vmAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.VM} \n`
-                        var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
+                        exec("virsh list | grep test-script | awk \'{print $3}\'", (err, status, stderr) => {
+                            if (err) {
+                                logger.info("createVM -", req.body.name, error)
+                                console.log("createVM -", req.body.name, error)
+                            }
+                            if (stderr) {
+                                logger.info("createVM -", req.body.name, stderr)
+                                console.log("createVM -", req.body.name, stderr)
+                            }
+                            if (status) {
+                                data.status = status
+                                data.ip = "unassigned"
 
-                        fs.appendFileSync('/var/spool/cron/root', "*/3 * * * * " + vmAPI)
-                        fs.appendFileSync('/var/spool/cron/root', "*/3 * * * * " + ipAPI)
+                                var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
 
-                        this.VM.create(data)
-                            .then((vm) => {
-                                logger.info("createVM -", vm)
-                                console.log("createVM -", vm)
+                                fs.appendFileSync('/var/spool/cron/root', "*/1 * * * * " + ipAPI)
 
-                                return res.status(statusCode.CREATED).json({
-                                    message: "Create OK - Virtual Machine Loading...",
-                                });
-                            })
-                            .catch((DBerror) => {
-                                logger.error("createVM Error -", DBerror);
-                                return res.status(statusCode.METHOD_FAILURE).json({
-                                    status: statusCode.METHOD_FAILURE,
-                                    message: "Error Adding VM Data To Postgres",
-                                });
-                            });
+                                this.VM.create(data)
+                                    .then((vm) => {
+                                        logger.info("createVM -", vm)
+                                        console.log("createVM -", vm)
+
+                                        return res.status(statusCode.CREATED).json({
+                                            message: "Create OK - Virtual Machine Loading...",
+                                        });
+                                    })
+                                    .catch((DBerror) => {
+                                        logger.error("createVM Error -", DBerror);
+                                        return res.status(statusCode.METHOD_FAILURE).json({
+                                            status: statusCode.METHOD_FAILURE,
+                                            message: "Error Adding VM Data To Postgres",
+                                        });
+
+                                    });
+                            }
+                        });
+
                     }
 
                 })
@@ -85,14 +102,33 @@ module.exports = new (class vmController extends controller {
         }
     }
 
-    async checkVMStatus(req, res) {
+    async checkVMIP(req, res) {
 
         try {
             let data = {
-                status: ""
+                ip: ""
             };
 
-            shell.exec('/root/configuration/createVM.sh')
+            exec("virsh list | grep test-script | awk \'{print $3}\'", (err, status, stderr) => {
+                if (err) {
+                    logger.info("createVM -", req.body.name, error)
+                    console.log("createVM -", req.body.name, error)
+                }
+                if (stderr) {
+                    logger.info("createVM -", req.body.name, stderr)
+                    console.log("createVM -", req.body.name, stderr)
+                }
+                if (status) {
+                    data.status = status
+                    data.ip = "unassigned"
+
+
+
+                }
+
+
+            })
+
 
             var vmAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.VM} \n`
             var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
@@ -102,7 +138,7 @@ module.exports = new (class vmController extends controller {
 
                 .update(data, {
                     where: {
-                        name:  req.body.name
+                        name: req.body.name
                     },
                     limit: 1,
                 })
@@ -134,11 +170,6 @@ module.exports = new (class vmController extends controller {
                 message: "Server Error",
             });
         }
-
-    }
-
-    async checkVMIP(req, res) {
-
 
     }
 

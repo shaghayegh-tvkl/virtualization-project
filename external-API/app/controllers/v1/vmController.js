@@ -85,7 +85,7 @@ module.exports = new (class vmController extends controller {
                 status: ""
             };
 
-            shell.exec('/root/configuration/createVM.sh')
+            shell.exec('/root/configuration/create-vm.sh')
 
             var vmAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.VM} \n`
             var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
@@ -137,32 +137,36 @@ module.exports = new (class vmController extends controller {
 
     // Methodes
 
-    async update(query, userId) {
-        console.log(query);
+    async list(query, userId) {
+        return new promise((res, rej) => {
+            let machines = [];
 
-        return new Promise((res, rej) => {
-            let name = req.body.name
-
-            let data = {
-                ip: ""
-            };
-
-            this.VM.update(data, {
-                where: {
-                    name: data.name
-                },
-                limit: 1,
-            })
-                .then((vm) => {
-                    var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
-
-
-
+            this.VM.findAll({})
+                .then(result => {
+                    if (result) {
+                        for (let machine in result) {
+                            machines.push({
+                                Name: machine.dataValues.name,
+                                RAM: machine.dataValues.ram,
+                                CPU: machine.dataValues.cpu,
+                                Disk: machine.dataValues.disk,
+                                IP: machine.dataValues.ip,
+                                CreatedAt: machine.dataValues.createdAt
+                            });
+                            if (machines.length == result.length) {
+                                res(machines)
+                            }
+                        }
+                        if (machines.length == result.length) {
+                            res(machines)
+                        }
+                    }
                 })
-                .catch((error) => {
+                .catch(error => {
+                    logger.error(error);
                     rej(error);
                 });
-        });
+        })
     }
 
 
