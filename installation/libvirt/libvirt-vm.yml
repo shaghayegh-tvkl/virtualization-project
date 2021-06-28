@@ -1,0 +1,55 @@
+- name: Install Packages
+  dnf:
+    name: [virt-install,virt-viewer,libguestfs-tools,wget,libvirt-daemon-config-network,libvirt-nss,libgcrypt]
+    state: latest
+    update_cache: yes
+
+- name: Download ISO file
+  command: wget https://cloud-images.ubuntu.com/bionic/current/baseimg=bionic-server-cloudimg-amd64.img -O /root/configuration/ubuntu.img
+
+- name: Change qemu user
+  command: sed -i -e 's/#user = "root"/user = "root"/g' /etc/libvirt/qemu.conf 
+
+- name: Change qemu group
+  command: sed -i -e 's/#group = "root"/group = "root"/g' /etc/libvirt/qemu.conf 
+
+- name: Start Default network
+  command: virsh net-autostart default 
+
+- name: Start Default network
+  command: virsh net-start default 
+
+- name: Copy network config
+  ansible.builtin.copy:
+    src: ./files/network_config_static.cfg
+    dest: /root/configuration/network_config_static.cfg
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy cloud config
+  ansible.builtin.copy:
+    src: ./files/cloud_init.cfg
+    dest: /root/configuration/cloud_init.cfg
+    owner: root
+    group: root
+    mode: '0644'
+
+  
+- name: Copy create vm script
+  ansible.builtin.copy:
+    src: ./files/create-vm.sh
+    dest: /root/configuration/create-vm.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Copy cloud-utils script
+  ansible.builtin.copy:
+    src: ./files/cloud-localds
+    dest: /root/configuration/cloud-localds
+    owner: root
+    group: root
+    mode: '0755'
+
+

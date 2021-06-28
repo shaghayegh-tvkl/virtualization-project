@@ -1,0 +1,26 @@
+- name: Include Network Variables
+  include_vars: ./vars/network.yml
+
+- name: Create Bridge
+  command: nmcli con add type bridge ifname br0
+
+- name: Create Bridge Slave
+  command: nmcli con add type bridge-slave ifname eth0 master br0
+
+- name: Disable STP
+  command: nmcli con modify bridge-br0 bridge.stp no
+
+- name: Modify IP
+  command: nmcli con modify bridge-br0 ipv4.addresses {{ Address }}
+
+
+- name: Modify Gateway
+  command: nmcli con modify bridge-br0 ipv4.gateway {{ Gateway }}
+
+
+- name: Modify DNS
+  command: nmcli con modify bridge-br0 ipv4.dns {{ DNS }}
+
+- name: Up Bridge Slave
+  command: ifconfig br0 up
+

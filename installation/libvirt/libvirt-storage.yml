@@ -1,0 +1,38 @@
+- name: Include Pool Variables
+  include_vars: ./vars/pool.yml
+
+- name: Create Config Directory
+  command: mkdir -p /root/configuration
+
+- name: Copy pecret.xml file
+  template:
+    src: ./files/secret.xml.j2
+    dest: /root/configuration/secret.xml
+    owner: root
+    group: root
+    mode: "0644"
+    
+- name: Create Libvirt Secret
+  command: chdir=/root/configuration virsh secret-define --file secret.xml
+
+- name: Set Libvirt Secret Value
+  command: virsh secret-set-value --secret "{{uuid}}" --base64 "{{secret}}"
+
+
+- name: Copy pool.xml file
+  template:
+    src: ./files/pool.xml.j2
+    dest: /root/configuration/pool.xml
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Create Storage Pool
+  command: chdir=/root/configuration virsh pool-define pool.xml
+
+- name: Start Pool
+  command: virsh pool-start storagepool
+
+- name: Set as Pool as Autostart
+  command: virsh pool-autostart storagepool
+
