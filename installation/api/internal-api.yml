@@ -1,0 +1,16 @@
+- name: Copy Code
+  ansible.builtin.copy:
+    src: ../../internal-API
+    dest: /root
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Install dependencies
+  commad: chdir=/root/internal-API npm Install
+
+- name: Install pm2 
+  command: npm i -g pm2 
+
+- name: Run Internal API Code 
+  command: chdir=/root/internal-API pm2 start app.js

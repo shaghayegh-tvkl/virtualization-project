@@ -1,0 +1,13 @@
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: ../../external-API
+    dest: /root
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Install dependencies
+  commad: chdir=/root/external-API npm Install
+
+- name: Run External API Code 
+  command: chdir=/root/external-API pm2 restart app.js
