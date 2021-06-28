@@ -7,7 +7,7 @@
     mode: '0755'
 
 - name: Install dependencies
-  commad: chdir=/root/internal-API npm Install
+  command: chdir=/root/internal-API npm Install
 
 - name: Install pm2 
   command: npm i -g pm2 
