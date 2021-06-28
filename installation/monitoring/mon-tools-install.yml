@@ -6,6 +6,16 @@
     group: root
     mode: "0644"
 
+- name: Create Prometheus Volume Mount Point
+  command: mkdir -p /prometheus
+
+- name: Create Prometheus Config Mount Point
+  command: mkdir -p /etc/prometheus
+  
+- name: Create Grafana Volume Mount Point
+  command: mkdir -p /var/lib/grafana
+
+
 - name: Create Prometheus Config File
   ansible.builtin.copy:
     content: ""
@@ -14,14 +24,6 @@
     owner: root
     group: root
     mode: "0644"
-
-- name: Create Prometheus Volume Mount Point
-  command: mkdir -p /prometheus
-  
-
-
-- name: Create Grafana Volume Mount Point
-  command: mkdir -p /var/lib/grafana
 
 - name: Up Docker Containers
   command: chdir=/root docker-compose up -d
