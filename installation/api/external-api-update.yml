@@ -7,7 +7,7 @@
     mode: '0755'
 
 - name: Install dependencies
-  command: chdir=/root/external-API npm Install
+  command: chdir=/root/external-API npm install
 
 - name: Run External API Code 
   command: chdir=/root/external-API pm2 restart app.js
