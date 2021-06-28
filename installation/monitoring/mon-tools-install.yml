@@ -15,5 +15,13 @@
     group: root
     mode: "0644"
 
+- name: Create Prometheus Volume Mount Point
+  command: mkdir -p /prometheus
+  
+
+
+- name: Create Grafana Volume Mount Point
+  command: mkdir -p /var/lib/grafana
+
 - name: Up Docker Containers
   command: chdir=/root docker-compose up -d

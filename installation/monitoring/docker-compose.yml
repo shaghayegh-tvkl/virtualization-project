@@ -5,8 +5,9 @@ services:
         container_name: monitoring_prometheus
         restart: unless-stopped
         volumes:
-        - ./data/prometheus/config:/etc/prometheus/
-        - ./data/prometheus/data:/prometheus
+        - /etc/prometheus:/etc/prometheus
+        - /prometheus:/prometheus
+
         command:
         - '-config.file=/etc/prometheus/prometheus.yml'
         - '-storage.local.path=/prometheus'
@@ -45,7 +46,7 @@ services:
         links:
         - prometheus:prometheus
         volumes:
-        - ./data/grafana:/var/lib/grafana
+        - /var/lib/grafana:/var/lib/grafana
         environment:
         - GF_SECURITY_ADMIN_PASSWORD=MYPASSWORT
         - GF_USERS_ALLOW_SIGN_UP=false
