@@ -11,23 +11,4 @@ module.exports = class controller {
     };
   }
 
-  generateCode(parameter) {
-    let now = Date.now();
-    let code = md5(parameter + now);
-
-    return code;
-  }
-
-  generateTimestampUUID() {
-    let uuid = uuidv1();
-
-    return uuid;
-  }
-
-  generateRandomUUID() {
-    let uuid = uuidv4();
-
-    return uuid;
-  }
-
 };

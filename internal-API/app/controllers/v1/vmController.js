@@ -102,7 +102,7 @@ module.exports = new (class vmController extends controller {
 
                 .update(data, {
                     where: {
-                        name: data.name
+                        name:  req.body.name
                     },
                     limit: 1,
                 })
