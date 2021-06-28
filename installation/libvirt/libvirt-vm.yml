@@ -16,8 +16,8 @@
 - name: Start Default network
   command: virsh net-autostart default 
 
-- name: Start Default network
-  command: virsh net-start default 
+# - name: Start Default network
+#   command: virsh net-start default 
 
 - name: Copy network config
   ansible.builtin.copy:
