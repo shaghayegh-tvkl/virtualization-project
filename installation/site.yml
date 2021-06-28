@@ -125,8 +125,8 @@
 
   remote_user: root
   tasks:
-    - name: Install Docker
-      include: ./docker/docker-install-ubuntu.yml
+    # - name: Install Docker
+    #   include: ./docker/docker-install-ubuntu.yml
 
     - name: Create Prometheus and Grafana Containers
       include: ./monitoring/mon-tools-install.yml
