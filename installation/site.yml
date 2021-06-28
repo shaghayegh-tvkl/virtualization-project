@@ -44,15 +44,15 @@
 
 # ------------------------------------------------------------------------------
 
-- name: Virual Machine Configuration
-  hosts:
-    - virtualization
+# - name: Virual Machine Configuration
+#   hosts:
+#     - virtualization
 
-  remote_user: root
-  tasks:
+#   remote_user: root
+#   tasks:
 
-    - name: Create Libvirt Config Files
-      include: ./libvirt/libvirt-vm.yml
+#     - name: Create Libvirt Config Files
+#       include: ./libvirt/libvirt-vm.yml
 
 # ------------------------------------------------------------------------------
 # - name: Database
@@ -63,7 +63,7 @@
 #   tasks:
 
 #     - name: Install Docker
-#       include: ./docker/docker-install.yml
+#       include: ./docker/docker-install-centos.yml
 
 #     - name: Create Redis and Postgres Containers
 #       include: ./database/database-install.yml
@@ -82,40 +82,40 @@
 
 # ------------------------------------------------------------------------------
 
-- name: External APIs
-  hosts: external-API
-  remote_user: root
-  tasks:
-    - name: Install HAProxy
-      include: ./haproxy/haproxy-install.yml
+# - name: External APIs
+#   hosts: external-API
+#   remote_user: root
+#   tasks:
+#     - name: Install HAProxy
+#       include: ./haproxy/haproxy-install.yml
     
-    - name: Copy and Run Code
-      include: ./api/external-api.yml
+#     - name: Copy and Run Code
+#       include: ./api/external-api.yml
 
-    # - name: Update and Restart Code
-    #   include: ./api/external-api-update.yml
+#     # - name: Update and Restart Code
+#     #   include: ./api/external-api-update.yml
 
-    # - name: Config HAProxy
-    #   include: 
+#     # - name: Config HAProxy
+#     #   include: 
 
 
 # ------------------------------------------------------------------------------
 
-- name: Internal APIs
-  hosts: internal-API
-  remote_user: root
-  tasks:
-    - name: Install HAProxy
-      include: ./haproxy/haproxy-install.yml
+# - name: Internal APIs
+#   hosts: internal-API
+#   remote_user: root
+#   tasks:
+#     - name: Install HAProxy
+#       include: ./haproxy/haproxy-install.yml
     
-    - name: Copy and Run Code
-      include: ./api/internal-api.yml
+#     - name: Copy and Run Code
+#       include: ./api/internal-api.yml
 
-    # - name: Update and Restart Code
-    #   include: ./api/internal-api-update.yml
+#     # - name: Update and Restart Code
+#     #   include: ./api/internal-api-update.yml
 
-    # - name: Config HAProxy
-    #   include: 
+#     # - name: Config HAProxy
+#     #   include: 
 
 # ------------------------------------------------------------------------------
 
@@ -126,7 +126,7 @@
   remote_user: root
   tasks:
     - name: Install Docker
-      include: ./docker/docker-install.yml
+      include: ./docker/docker-install-ubuntu.yml
 
     - name: Create Prometheus and Grafana Containers
       include: ./monitoring/mon-tools-install.yml
