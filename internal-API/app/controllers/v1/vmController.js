@@ -39,7 +39,7 @@ module.exports = new (class vmController extends controller {
 
             redisDatabaseObj.add(config.redis.index,
                 data.name,
-                data.name, require('os').networkInterfaces()['eth0'][0].address,
+                require('os').networkInterfaces()['eth0'][0].address,
                 (error) => {
                     if (error) {
                         logger.error("createVM Error -", error);
