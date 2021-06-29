@@ -108,6 +108,7 @@ module.exports = new (class vmController extends controller {
         try {
             let data = {
                 name: req.body.name,
+                ip: ""
             };
 
             exec(`arp -a | grep $(virsh domiflist ${data.name} | awk '{print $5 }' | tail -2 | head -1) | awk '{print $2}' | sed 's/[()]//g'`, (err, ip, stderr) => {
