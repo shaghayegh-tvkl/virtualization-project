@@ -5,8 +5,7 @@ services:
     container_name: monitoring_prometheus
     restart: unless-stopped
     volumes:
-      - ./data/prometheus/config:/etc/prometheus/
-      - ./data/prometheus/data:/prometheus
+      - /etc/prometheus/:/etc/prometheus/
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       # - '--storage.local.path=/prometheus'
