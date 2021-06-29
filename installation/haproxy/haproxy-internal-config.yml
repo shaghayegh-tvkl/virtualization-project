@@ -1,7 +1,9 @@
-- template:
+- name: Copy HAProxy Config Files
+  template:
     dest: /etc/haproxy/haproxy.cfg
     src: ./files/internal-config.cfg.j2
 
-- service:
+- name: Restart HAProxy 
+  service:
     name: "haproxy"
     state: restarted
