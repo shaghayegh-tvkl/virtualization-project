@@ -69,7 +69,7 @@ module.exports = new (class vmController extends controller {
 
                 })
                 .catch(error => {
-                    logger.error("createVM API Error -", error.response.data);
+                    logger.error("createVM API Error -", error);
                     return res.status(statusCode.INTERNAL_SERVER_ERROR).json({
                         status: statusCode.INTERNAL_SERVER_ERROR,
                         message: "Server Error",
