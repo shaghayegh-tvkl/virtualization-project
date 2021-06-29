@@ -128,8 +128,8 @@
     - external-HA
   remote_user: root
   tasks:
-#     - name: Install HAProxy
-#       include: ./haproxy/haproxy-install.yml
+    - name: Install HAProxy
+      include: ./haproxy/haproxy-install.yml
     
     - name: Configure HAProxy
       include: ./haproxy/haproxy-external-config.yml
