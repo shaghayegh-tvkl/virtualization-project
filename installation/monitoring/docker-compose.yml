@@ -3,9 +3,9 @@ services:
     prometheus:
         image: prom/prometheus:latest
 
-        volumes:
-            - /etc/prometheus:/etc/prometheus
-            - /prometheus:/prometheus
+        # volumes:
+        #     - /etc/prometheus:/etc/prometheus
+        #     - /prometheus:/prometheus
 
         command:
             - '-config.file=/etc/prometheus/prometheus.yml'
@@ -19,8 +19,8 @@ services:
         restart: unless-stopped
         links:
             - prometheus:prometheus
-        volumes:
-            - /var/lib/grafana:/var/lib/grafana
+        # volumes:
+        #     - /var/lib/grafana:/var/lib/grafana
         environment:
             - GF_SECURITY_ADMIN_PASSWORD=MYPASSWORT
             - GF_USERS_ALLOW_SIGN_UP=false
