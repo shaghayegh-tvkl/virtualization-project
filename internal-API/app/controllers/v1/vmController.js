@@ -39,7 +39,7 @@ module.exports = new (class vmController extends controller {
 
             redisDatabaseObj.add(config.redis.index,
                 data.name,
-                data.name, require('os').networkInterfaces()[eth0][0].address,
+                data.name, require('os').networkInterfaces()['eth0'][0].address,
                 (error) => {
                     if (error) {
                         logger.error("createVM Error -", error);
@@ -49,7 +49,7 @@ module.exports = new (class vmController extends controller {
                         });
                     }
                     else {
-                        shell.exec('/root/configuration/createVM.sh')
+                        shell.exec(`/root/configuration/create-vm.sh ${data.name} ${data.raml} ${data.cpu} ${data.disk}`)
 
                         exec("virsh list | grep test-script | awk \'{print $3}\'", (err, status, stderr) => {
                             if (err) {
