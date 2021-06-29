@@ -9,7 +9,7 @@ services:
       - ./data/prometheus/data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
-      - '-storage.local.path=/prometheus'
+      - '--storage.local.path=/prometheus'
       - '-alertmanager.url=http://alertmanager:9093'
     expose:
       - 9090
@@ -42,8 +42,8 @@ services:
     image: grafana/grafana:latest
     container_name: monitoring_grafana
     restart: unless-stopped
-    # links:
-    #   - prometheus:prometheus
+    links:
+      - prometheus:prometheus
     volumes:
       - /var/lib/grafana:/var/lib/grafana
 
