@@ -155,14 +155,14 @@ module.exports = new (class vmController extends controller {
             this.VM.findAll({})
                 .then(result => {
                     if (result) {
-                        for (let machine in result) {
+                        for (let i = 0; i <  result.length; i++) {
                             machines.push({
-                                Name: machine.dataValues.name,
-                                RAM: machine.dataValues.ram,
-                                CPU: machine.dataValues.cpu,
-                                Disk: machine.dataValues.disk,
-                                IP: machine.dataValues.ip.replace("+", ""),
-                                CreatedAt: machine.dataValues.createdAt
+                                Name: result[i].dataValues.name,
+                                RAM: result[i].dataValues.ram,
+                                CPU: result[i].dataValues.cpu,
+                                Disk: result[i].dataValues.disk,
+                                IP: result[i].dataValues.ip.replace("+", ""),
+                                CreatedAt: result[i].dataValues.createdAt
                             });
                             if (machines.length == result.length) {
                                 res(machines)
