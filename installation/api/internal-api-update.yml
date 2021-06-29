@@ -7,7 +7,7 @@
     mode: '0755'
 
 - name: Install dependencies
-  commabd: chdir=/root/internal-API npm install
+  command: chdir=/root/internal-API npm install
 
 - name: Run Internal API Code 
   command: chdir=/root/internal-API pm2 restart app.js
