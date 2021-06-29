@@ -13,10 +13,10 @@ router.get("/vm", vmController.listVM.bind(vmController));
 router.post("/vm", vmController.createVM.bind(vmController));
 
 // Check if VM has been created 
-router.post("/vm/status", vmController.checkVMStatus.bind(vmController));
+// router.post("/vm/status", vmController.checkVMStatus.bind(vmController));
 
 // Check if VM has been assigned an IP 
-router.post("/vm/ip", vmController.checkVMIP.bind(vmController));
+// router.post("/vm/ip", vmController.checkVMIP.bind(vmController));
 
 
 

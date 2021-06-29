@@ -57,10 +57,8 @@ module.exports = new (class vmController extends controller {
                 data: body
             }
 
-            axios(request)
+            await axios(request)
                 .then(async (response) => {
-
-
 
                     logger.info("createVM -", vm)
                     console.log("createVM -", vm)
@@ -89,62 +87,62 @@ module.exports = new (class vmController extends controller {
         }
     }
 
-    async checkVMStatus(req, res) {
+    // async checkVMStatus(req, res) {
 
-        try {
-            let data = {
-                status: ""
-            };
+    //     try {
+    //         let data = {
+    //             status: ""
+    //         };
 
-            shell.exec('/root/configuration/create-vm.sh')
+    //         shell.exec('/root/configuration/create-vm.sh')
 
-            var vmAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.VM} \n`
-            var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
+    //         var vmAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.VM} \n`
+    //         var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
 
-            fs.appendFileSync('/var/spool/cron/root', "*/3 * * * * " + vmAPI)
-            fs.appendFileSync('/var/spool/cron/root', "*/3 * * * * " + ipAPI)
+    //         fs.appendFileSync('/var/spool/cron/root', "*/3 * * * * " + vmAPI)
+    //         fs.appendFileSync('/var/spool/cron/root', "*/3 * * * * " + ipAPI)
 
-                .update(data, {
-                    where: {
-                        name: req.body.name
-                    },
-                    limit: 1,
-                })
-                .then((vm) => {
-                    var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
-
-
-
-
-                    console.log(timeline);
-                    return res.status(statusCode.CREATED).json({
-                        message: "Create OK - Virtual Machine Loading...",
-                    });
-                })
-                .catch((DBerror) => {
-                    logger.error("createVM Error -", DBerror);
-                    return res.status(statusCode.METHOD_FAILURE).json({
-                        status: statusCode.METHOD_FAILURE,
-                        message: "Error Adding VM Data To Postgres",
-                    });
-                });
+    //             .update(data, {
+    //                 where: {
+    //                     name: req.body.name
+    //                 },
+    //                 limit: 1,
+    //             })
+    //             .then((vm) => {
+    //                 var ipAPI = `curl -X POST -d '{"name" :"${data.name}"}' -H "Content-Type: application/json" ${config.api.IP} \n`
 
 
 
-        } catch (error) {
-            logger.error("createVM Error -", error);
-            return res.status(statusCode.INTERNAL_SERVER_ERROR).json({
-                status: statusCode.INTERNAL_SERVER_ERROR,
-                message: "Server Error",
-            });
-        }
 
-    }
+    //                 console.log(timeline);
+    //                 return res.status(statusCode.CREATED).json({
+    //                     message: "Create OK - Virtual Machine Loading...",
+    //                 });
+    //             })
+    //             .catch((DBerror) => {
+    //                 logger.error("createVM Error -", DBerror);
+    //                 return res.status(statusCode.METHOD_FAILURE).json({
+    //                     status: statusCode.METHOD_FAILURE,
+    //                     message: "Error Adding VM Data To Postgres",
+    //                 });
+    //             });
 
-    async checkVMIP(req, res) {
 
 
-    }
+    //     } catch (error) {
+    //         logger.error("createVM Error -", error);
+    //         return res.status(statusCode.INTERNAL_SERVER_ERROR).json({
+    //             status: statusCode.INTERNAL_SERVER_ERROR,
+    //             message: "Server Error",
+    //         });
+    //     }
+
+    // }
+
+    // async checkVMIP(req, res) {
+
+
+    // }
 
     // Methodes
 
@@ -155,7 +153,7 @@ module.exports = new (class vmController extends controller {
             this.VM.findAll({})
                 .then(result => {
                     if (result) {
-                        for (let i = 0; i <  result.length; i++) {
+                        for (let i = 0; i < result.length; i++) {
                             machines.push({
                                 Name: result[i].dataValues.name,
                                 RAM: result[i].dataValues.ram,

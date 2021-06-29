@@ -5,7 +5,7 @@
         "title": "Virtualization Internal APIs Documentation",
         "description": ""
     },
-    "host": "37.152.178.84/:8000",
+    "host": "37.152.178.84",
     "basePath": "/api/v1",
     "tags": [
         {
