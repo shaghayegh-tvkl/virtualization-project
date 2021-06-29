@@ -4,6 +4,7 @@
     state: latest
   become: yes
 
-- service:
-  name: "haproxy"
-  state: started
+- name: Start HAProxy
+  service:
+    name: "haproxy"
+    state: started 
