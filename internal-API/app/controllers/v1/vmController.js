@@ -119,7 +119,7 @@ module.exports = new (class vmController extends controller {
                     logger.info("checkVMIP -", req.body.name, stderr)
                     console.log("checkVMIP -", req.body.name, stderr)
                 }
-                if (status == "") {
+                if (ip == "") {
                     // data.ip = "unassigned"
                     // IP Unassigned
                     logger.info("checkVMIP -", req.body.name, "IP Unassigned")
