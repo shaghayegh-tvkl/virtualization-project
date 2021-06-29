@@ -96,16 +96,16 @@
 
 # ------------------------------------------------------------------------------
 
-# - name: Internal APIs
-#   hosts: internal-API
-#   remote_user: root
-#   tasks:
+- name: Internal APIs
+  hosts: internal-API
+  remote_user: root
+  tasks:
     
 #     - name: Copy and Run Code
 #       include: ./api/internal-api.yml
 
-    # - name: Update and Restart Code
-    #   include: ./api/internal-api-update.yml
+    - name: Update and Restart Code
+      include: ./api/internal-api-update.yml
 
 
 # ------------------------------------------------------------------------------
