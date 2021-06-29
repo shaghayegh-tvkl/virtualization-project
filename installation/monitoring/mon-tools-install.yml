@@ -15,6 +15,9 @@
 - name: Create Grafana Volume Mount Point
   command: mkdir -p /var/lib/grafana
 
+- name: Give Grafana Volume Mount Point Permission
+  command: chmod 775 /var/lib/grafana
+
 
 - name: Create Prometheus Config File
   ansible.builtin.copy:
