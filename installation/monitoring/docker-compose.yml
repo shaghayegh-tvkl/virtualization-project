@@ -8,9 +8,9 @@ services:
       - ./data/prometheus/config:/etc/prometheus/
       - ./data/prometheus/data:/prometheus
     command:
-      - '-config.file=/etc/prometheus/prometheus.yml'
-      - '-storage.local.path=/prometheus'
-      - '-alertmanager.url=http://alertmanager:9093'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.local.path=/prometheus'
+      - '--alertmanager.url=http://alertmanager:9093'
     expose:
       - 9090
     ports:
