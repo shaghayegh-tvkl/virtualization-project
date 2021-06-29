@@ -43,7 +43,7 @@ const redisDatabase = require(`${config.path.models}/RedisDB`);
 const redisDatabaseObj = new redisDatabase();
 redisDatabaseObj.connectToDatabase();
 
-const swaggerUi = require("swagger-ui-express"), swaggerDocument = require("../doc/external-API.json");
+const swaggerUi = require("swagger-ui-express"), swaggerDocument = require("./doc/external-API.json");
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
