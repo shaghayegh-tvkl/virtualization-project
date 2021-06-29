@@ -1,0 +1,12 @@
+- name: Copy HAProxy Config Files
+  template:
+    src: ./files/external-config.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Restart HAProxy 
+  service:
+    name: "haproxy"
+    state: restarted
