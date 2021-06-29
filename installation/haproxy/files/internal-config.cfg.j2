@@ -1,27 +1,28 @@
 frontend http
-acl vm path_end -i /api/v1/vm
-acl ip path_end -i /api/v1/ip 
-acl docs path_end -i /api-docs
+   bind *:8000
+   acl vm path_end -i /api/v1/vm
+   acl ip path_end -i /api/v1/ip 
+   acl docs path_end -i /api-docs
 
-use_backend srvs_vm if vm
-use_backend srvs_ip if ip
-use_backend srvs_docs if docs
+   use_backend srvs_vm if vm
+   use_backend srvs_ip if ip
+   use_backend srvs_docs if docs
 
 backend srvs_vm 
    balance roundrobin 
    http-request set-path /api/v1/vm
-   server host1 192.168.54.19:8000 
-   server host2 192.168.54.15:8000
+   server host1 192.168.54.19:8000 check 
+   server host2 192.168.54.15:8000 check
 
 backend srvs_ip 
    balance roundrobin 
    http-request set-path /api/v1/vm/ip
-   server host1 192.168.54.19:8000 
-   server host2 192.168.54.15:8000
+   server host1 192.168.54.19:8000 check
+   server host2 192.168.54.15:8000 check
 
 backend srvs_docs 
    balance roundrobin 
    http-request set-path /api-docs
-   server host1 192.168.54.19:8000 
-   server host2 192.168.54.15:8000
+   server host1 192.168.54.19:8000 check
+   server host2 192.168.54.15:8000 check
 
