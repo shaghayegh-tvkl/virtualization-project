@@ -5,6 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const axios = require("axios");
 const shell = require('shelljs')
+const promise = require('promise');
 
 const op = Sequelize.Op;
 
