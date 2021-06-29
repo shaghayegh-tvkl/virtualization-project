@@ -3,3 +3,7 @@
     name: haproxy
     state: latest
   become: yes
+
+- service:
+  name: "haproxy"
+  state: started

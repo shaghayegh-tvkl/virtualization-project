@@ -25,6 +25,16 @@ manager-node
 api-1
 api-2
 
+[external-HA]
+manager-node
+
 [internal-API]
 ceph-mon-1
 ceph-mon-2
+
+[internal-HA]
+virtualization-manager
+
+
+[monitoring]
+manager-node

@@ -86,17 +86,12 @@
 #   hosts: external-API
 #   remote_user: root
 #   tasks:
-#     - name: Install HAProxy
-#       include: ./haproxy/haproxy-install.yml
     
 #     - name: Copy and Run Code
 #       include: ./api/external-api.yml
 
 #     # - name: Update and Restart Code
 #     #   include: ./api/external-api-update.yml
-
-#     # - name: Config HAProxy
-#     #   include: 
 
 
 # ------------------------------------------------------------------------------
@@ -105,8 +100,6 @@
 #   hosts: internal-API
 #   remote_user: root
 #   tasks:
-#     - name: Install HAProxy
-#       include: ./haproxy/haproxy-install.yml
     
 #     - name: Copy and Run Code
 #       include: ./api/internal-api.yml
@@ -114,22 +107,47 @@
 #     # - name: Update and Restart Code
 #     #   include: ./api/internal-api-update.yml
 
-#     # - name: Config HAProxy
-#     #   include: 
 
 # ------------------------------------------------------------------------------
 
-- name: Monitoring
+- name: HAProxy
   hosts: 
-    - manager-node
-
+    - internal-HA
   remote_user: root
   tasks:
-    # - name: Install Docker
-    #   include: ./docker/docker-install-ubuntu.yml
+    - name: Install HAProxy
+      include: ./haproxy/haproxy-install.yml
+    
+    - name: Configure HAProxy
+      include: ./haproxy/haproxy-internal-config.yml
 
-    - name: Create Prometheus and Grafana Containers
-      include: ./monitoring/mon-tools-install.yml
+# ------------------------------------------------------------------------------
+
+# - name: HAProxy
+#   hosts: 
+#     - external-HA
+#   remote_user: root
+#   tasks:
+#     - name: Install HAProxy
+#       include: ./haproxy/haproxy-install.yml
+    
+#     - name: Configure HAProxy
+#       include: ./haproxy/haproxy-external-config.yml
+
+# ------------------------------------------------------------------------------
+
+
+# - name: Monitoring
+#   hosts: 
+#     - monitoring
+
+#   remote_user: root
+#   tasks:
+#     # - name: Install Docker
+#     #   include: ./docker/docker-install-ubuntu.yml
+
+#     - name: Create Prometheus and Grafana Containers
+#       include: ./monitoring/mon-tools-install.yml
 
 
 ...
