@@ -82,30 +82,30 @@
 
 # ------------------------------------------------------------------------------
 
-- name: External APIs
-  hosts: external-API
-  remote_user: root
-  tasks:
+# - name: External APIs
+#   hosts: external-API
+#   remote_user: root
+#   tasks:
     
 #     - name: Copy and Run Code
 #       include: ./api/external-api.yml
 
-    - name: Update and Restart Code
-      include: ./api/external-api-update.yml
+    # - name: Update and Restart Code
+    #   include: ./api/external-api-update.yml
 
 
 # ------------------------------------------------------------------------------
 
-- name: Internal APIs
-  hosts: internal-API
-  remote_user: root
-  tasks:
+# - name: Internal APIs
+#   hosts: internal-API
+#   remote_user: root
+#   tasks:
     
 #     - name: Copy and Run Code
 #       include: ./api/internal-api.yml
 
-    - name: Update and Restart Code
-      include: ./api/internal-api-update.yml
+    # - name: Update and Restart Code
+    #   include: ./api/internal-api-update.yml
 
 
 # ------------------------------------------------------------------------------
