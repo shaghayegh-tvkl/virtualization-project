@@ -23,7 +23,17 @@ module.exports = new (class vmController extends controller {
     // APIs
 
     async listVM(req, res) {
+        await this.list().then((machines) => {
 
+            return res.status(statusCode.OK).json(machines);
+
+        }).catch((error) => {
+            logger.error("listVM -", error);
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).json({
+                status: statusCode.INTERNAL_SERVER_ERROR,
+                message: "Server Error",
+            });
+        })
 
     }
 
@@ -137,7 +147,7 @@ module.exports = new (class vmController extends controller {
 
     // Methodes
 
-    async list(query, userId) {
+    async list() {
         return new promise((res, rej) => {
             let machines = [];
 
@@ -150,7 +160,7 @@ module.exports = new (class vmController extends controller {
                                 RAM: machine.dataValues.ram,
                                 CPU: machine.dataValues.cpu,
                                 Disk: machine.dataValues.disk,
-                                IP: machine.dataValues.ip,
+                                IP: machine.dataValues.ip.replace("+", ""),
                                 CreatedAt: machine.dataValues.createdAt
                             });
                             if (machines.length == result.length) {

@@ -28,7 +28,6 @@ module.exports = {
 
   api: {
     IP: "http://192.168.54.21:8000/api/v1/vm/ip",
-    VM: "http://192.168.54.21:8000/api/v1/vm/status",
     create: "http://192.168.54.21:8000/api/v1/vm"
   }
 };
