@@ -17,13 +17,13 @@ module.exports = class RedisDB {
 
     add(index, key, value, callback) {
         client.select(index, add => {
-            client.hmset(key, value, (error) => { return callback(error) });
+            client.set(key, value, (error) => { return callback(error) });
         })
     }
 
     get(index, key, callback) {
         client.select(index, get => {
-            client.hgetall(key, function (error, results) {
+            client.get(key, function (error, results) {
                 if (error) {
                     callback(error)
                 } else {
@@ -48,7 +48,7 @@ module.exports = class RedisDB {
 
     update(index, key, value, callback) {
         client.select(index, get => {
-            client.hmset(key, value, (error) => {
+            client.set(key, value, (error) => {
                 return callback(error)
             });
         })
