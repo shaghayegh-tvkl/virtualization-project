@@ -60,8 +60,8 @@ module.exports = new (class vmController extends controller {
             await axios(request)
                 .then(async (response) => {
 
-                    logger.info("createVM -", vm)
-                    console.log("createVM -", vm)
+                    logger.info("createVM -", response)
+                    console.log("createVM -", response)
 
                     return res.status(statusCode.CREATED).json({
                         message: "Create OK - Virtual Machine Loading...",
