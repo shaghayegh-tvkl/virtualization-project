@@ -161,7 +161,7 @@ module.exports = new (class vmController extends controller {
                                 RAM: result[i].dataValues.ram,
                                 CPU: result[i].dataValues.cpu,
                                 Disk: result[i].dataValues.disk,
-                                IP: result[i].dataValues.ip.replace("+", ""),
+                                IP: result[i].dataValues.ip,
                                 CreatedAt: result[i].dataValues.createdAt
                             });
                             if (machines.length == result.length) {

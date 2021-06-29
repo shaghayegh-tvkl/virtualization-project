@@ -132,7 +132,7 @@ module.exports = new (class vmController extends controller {
                     });
 
                 } else {
-                    data.ip = ip.replace('+','')
+                    data.ip = ip.trim()
                     this.VM.update(data, {
                         where: {
                             name: req.body.name
