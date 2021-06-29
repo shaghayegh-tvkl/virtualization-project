@@ -11,7 +11,10 @@
 
 - name: Create Prometheus Config Mount Point
   command: mkdir -p /etc/prometheus
-  
+
+- name: Give Prometheus Config Mount Point Permission
+  command: chmod 775 /etc/prometheus
+
 - name: Create Grafana Volume Mount Point
   command: mkdir -p /var/lib/grafana
 
