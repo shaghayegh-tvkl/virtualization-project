@@ -73,7 +73,7 @@ module.exports = new (class vmController extends controller {
                                         logger.info("createVM -", req.body.name, vm)
                                         console.log("createVM -", req.body.name, vm)
 
-                                        return res.status(statusCode.CREATED).json({
+                                        return res.status(statusCode.OK).json({
                                             message: "Create OK - Virtual Machine Loading...",
                                         });
                                     })
