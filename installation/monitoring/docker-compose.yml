@@ -8,13 +8,10 @@ services:
       - /etc/prometheus/:/etc/prometheus/
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--alertmanager.url=http://alertmanager:9093'
     expose:
       - 9090
-      - 9093
     ports:
       - 9090:9090
-      - 9093:9093
     
   node-exporter:
     image: prom/node-exporter:latest
