@@ -162,6 +162,6 @@
     #   include: ./docker/docker-install-centos.yml
 
     - name: Create Prometheus and Grafana Containers
-      include: ./monitoring/mon-tools-install.yml
+      include: ./monitoring/libvirt-exporter.yml
 
 ...
