@@ -144,7 +144,7 @@
   remote_user: root
   tasks:
     # - name: Install Docker
-      # include: ./docker/docker-install-ubuntu.yml
+    #   include: ./docker/docker-install-ubuntu.yml
 
     - name: Create Prometheus and Grafana Containers
       include: ./monitoring/mon-tools-install.yml
@@ -152,16 +152,18 @@
 
 # ------------------------------------------------------------------------------
 
-# - name: Monitoring
-#   hosts: 
-#     - virtualization
+- name: Monitoring
+  hosts: 
+    - internal-API
+    - external-API
+    - database
 
-#   remote_user: root
-#   tasks:
-    # - name: Install Docker
-    #   include: ./docker/docker-install-centos.yml
+  remote_user: root
+  tasks:
+    - name: Install Docker
+      include: ./docker/docker-install-centos.yml
 
-    # - name: Create Prometheus and Grafana Containers
-    #   include: ./monitoring/libvirt-exporter.yml
+    - name: Run Node Exporter Container
+      command: docker run -p 9100:9100 prom/node-exporter:latest
 
 ...
