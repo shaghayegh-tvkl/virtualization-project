@@ -26,10 +26,7 @@
   ansible.builtin.copy:
     src: ./prometheus.yml
     dest: /etc/prometheus/prometheus.yml
-    force: no
-    owner: root
-    group: root
-    mode: "0644"
+
 
 - name: Up Docker Containers
   command: chdir=/root docker-compose up -d

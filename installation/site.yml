@@ -152,18 +152,17 @@
 
 # ------------------------------------------------------------------------------
 
-- name: Monitoring
-  hosts: 
-    - internal-API
-    - external-API
-    - database
+# - name: Monitoring
+#   hosts: 
+#     - external-API
+#     - database
 
-  remote_user: root
-  tasks:
-    - name: Install Docker
-      include: ./docker/docker-install-centos.yml
+#   remote_user: root
+#   tasks:
+#     - name: Install Docker
+#       include: ./docker/docker-install-centos.yml
 
-    - name: Run Node Exporter Container
-      command: docker run -p 9100:9100 prom/node-exporter:latest
+#     - name: Run Node Exporter Container
+#       command: docker run -d -p 9100:9100 prom/node-exporter:latest
 
 ...
