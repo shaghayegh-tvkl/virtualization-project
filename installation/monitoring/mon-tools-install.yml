@@ -24,7 +24,7 @@
 
 - name: Create Prometheus Config File
   ansible.builtin.copy:
-    content: ""
+    src: ./prometheus.yml
     dest: /etc/prometheus/prometheus.yml
     force: no
     owner: root

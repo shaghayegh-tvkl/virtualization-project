@@ -1,0 +1,50 @@
+global:
+  scrape_interval:     120s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 120s # By default, scrape targets every 15 seconds.
+
+  external_labels:
+      monitor: 'virtualization-project'
+
+# Load and evaluate rules in this file every 'evaluation_interval' seconds.
+rule_files:
+  # - "alert.rules"
+  # - "first.rules"
+  # - "second.rules"
+
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 120s
+    static_configs:
+        - targets: ['manager-node:9090']
+
+  - job_name: 'Node.js'
+    scrape_interval: 120s
+    static_configs:
+         - targets: ['api-1:8000','api-2:8000','virtualization-1:8000','virtualization-2:8000']
+
+  - job_name: 'Libvirt'
+    scrape_interval: 120s
+    static_configs:
+         - targets: ['virtualization-2:9177','virtualization-1:9177']
+
+  - job_name: 'Redis'
+    scrape_interval: 120s
+    static_configs:
+         - targets: ['virtualization-manager:9121']
+
+  - job_name: 'Postgres'
+    scrape_interval: 120s
+    static_configs:
+         - targets: ['virtualization-manager:9187']
+
+  - job_name: 'Node Exporter'
+    scrape_interval: 120s
+    static_configs:
+         - targets: ['api-1:9100','api-2:9100','virtualization-1:9100','virtualization-2:9100','virtualization-manager:9100','manager-node:9100']
+
+
+alerting:
+  alertmanagers:
+    - static_configs:
+      - targets: ["manager-node:9091"]
