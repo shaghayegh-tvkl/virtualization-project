@@ -1,6 +1,6 @@
 - name: Add Libvirt Exporter
-  command: docker run -ti -p 9177:9177 -v /run/libvirt/libvirt-sock-ro:/var/run/libvirt/libvirt-sock-ro:ro bykva/libvirt-exporter:1.0
+  command: podman run -ti -p 9177:9177 -v /run/libvirt/libvirt-sock-ro:/var/run/libvirt/libvirt-sock-ro:ro bykva/libvirt-exporter:1.0
 
 - name: Add Node Exporter
-  command: docker run -ti -p 9100:9100 prom/node-exporter:latest
+  command: podman run -ti -p 9100:9100 prom/node-exporter:latest
 
