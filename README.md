@@ -5,62 +5,58 @@
 This is the componenet diagram for this project:
 
 
-## Ceph Cluster
-
 
 ## Virtualization Node
+Virtual machines are created on two virtualization nodes. I'm using QEMU to emulate machines and Libvirt to provide a daemon and client to manipulate VMs.
+
+
+
+## Ceph Cluster
+The storage of my virtual machines are managed by Ceph. Ceph is an open-source software storage platform, implements object storage on a single distributed computer cluster, and provides 3-in-1 interfaces for object-, block- and file-level storage.
+A block is a sequence of bytes (often 512). Block-based storage interfaces are a mature and common way to store data on media including HDDs, SSDs, CDs, floppy disks, and even tape. The ubiquity of block device interfaces is a perfect fit for interacting with mass data storage including Ceph.
+
+Ceph block devices are thin-provisioned, resizable, and store data striped over multiple OSDs. Ceph block devices leverage RADOS capabilities including snapshotting, replication and strong consistency. Ceph block storage clients communicate with Ceph clusters through kernel modules or the librbd library. Ceph block devices can integrate with the QEMU virtual machines. 
+
+My Ceph Storage Cluster is made up of 3 Ceph Monitors, 1 Ceph Manager, and 3 Ceph OSDs.
+
+Libvirt-pool is created for RADOS Block Devices (RBD) in order to provide block device images to virtual machines. A pool is defined by Libvirt and connected to libvirt-pool to manage images.
 
 
 ## Internal API 
 
-## Internal HAProxy
+Creating virtual machines are done through internal APIs. A Node.js application using Express framework is running on virtualization nodes to provide APIs to create virtual machines and run the necessary scripts in order to create virutal machines. Internal APIs are run via PM2 process manager so if there is error, the application would be restarted automatically.
 
+Code is copied to each machine and started by ansible plays. If there would be an updated to the code, another ansible play would copy the files again, install npm dependencies, and restart the code with PM2.
+
+## Internal HAProxy
+For balancing the request between our two virtualization nodes, an HAProxy is used for load balancing the requests on our two machines using Round-robin algorithm.
 
 ## Database
+In this project, PostgreSQL database is used to store the data of all our virtual machines. Also, Redis is used to cache the name of each virtual machine and the IP address of the virtualization node on which it is running. This data can be used in order to change the status of each machine. For example, if you need to suspend a machine, you have to know exactly where is your machine.
+
+Both databases are installed using docker-compose.
 
 
 ## External API
+Users intract with this system through external APIs. A Node.js application using Express framework is running on api nodes to provide APIs to intract with internal APIs. External APIs are run via PM2 process manager so if there is error, the application would be restarted automatically.
 
+Code is copied to each machine and started by ansible plays. If there would be an updated to the code, another ansible play would copy the files again, install npm dependencies, and restart the code with PM2.
 
 ## Enternal HAProxy
+For balancing the request between our two API nodes, an HAProxy is used for load balancing the requests on our two machines using Round-robin algorithm.
 
 
 ## Monitoring
+For monitoring my application I have used Prometheus. Prometheus can collect metrics about your application and infrastructure. Metrics are small concise descriptions of an event: date, time, and a descriptive value. Grafana is also used for visualizing collected data.
 
+Both tools are installed using docker-compose.
 
 ## Manager Node
+All the tasks explained above are done using ansible:
+
+`ansible-playbook -i ./installation/hosts ./installation/site.yml`
 
 
-
-
-# Tools
-
-## Libvrit
-
-
-## Cloud-init
-
-
-## Ceph
-
-## Ansible
-
-
-## HAProxy
-
-
-## Node.js
-
-## Redis
-
-
-## PostgreSQL
-
-
-## Prometheus
-
-
-## Grafana
 
 # API Scenario
 
@@ -126,3 +122,16 @@ This API retrieves VM data from the database. The output is an array of JSON con
         }
     ]
 
+
+## Tools
+These following tools are used in this project.
+- Libvrit
+- Cloud-init
+- Ceph
+- Ansible
+- HAProxy
+- Node.js
+- Redis
+- PostgreSQL
+- Prometheus
+- Grafana
