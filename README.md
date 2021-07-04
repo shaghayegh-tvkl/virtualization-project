@@ -3,6 +3,7 @@
 
 # Components
 This diagram shows all the components of this project:
+
 ![ِ](https://raw.githubusercontent.com/shaghayegh-tvkl/virtualization-project/main/doc/Virtualization%20Project.png)
 
 
@@ -43,7 +44,7 @@ Users intract with this system through external APIs. A Node.js application usin
 
 Code is copied to each machine and started by ansible plays. If there would be an updated to the code, another ansible play would copy the files again, install npm dependencies, and restart the code with PM2.
 
-## Enternal HAProxy
+## External HAProxy
 For balancing the request between our two API nodes, an HAProxy is used for load balancing the requests on our two machines using Round-robin algorithm.
 
 
@@ -80,7 +81,7 @@ Input Sample:
         "Name":  "test-1",
         "RAM":  "1024",
         "CPU":  "2",
-        "Disk":  "10"
+        "Disk":  "10G"
     }
 
 Status Code 201 - Created in case the process is successful.
@@ -103,7 +104,7 @@ Input Sample:
         "Name":  "test-1",
         "RAM":  "1024",
         "CPU":  "2",
-        "Disk":  "10"
+        "Disk":  "10G"
     }
 
 Status Code 201 - Created in case the process is successful.
@@ -117,7 +118,7 @@ This API retrieves VM data from the database. The output is an array of JSON con
             "Name":  "test-1",
             "RAM":  "1024",
             "CPU":  "2",
-            "Disk":  "10",
+            "Disk":  "10G",
             "IP":  "192.168.122.122",
             "CreatedAt":  "2021-06-29T19:33:30.839Z"
         }
