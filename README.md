@@ -2,7 +2,8 @@
 
 
 # Components
-This is the componenet diagram for this project:
+This diagram shows all the components of this project:
+![ِ](https://raw.githubusercontent.com/shaghayegh-tvkl/virtualization-project/main/doc/Virtualization%20Project.png)
 
 
 
